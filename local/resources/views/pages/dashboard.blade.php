@@ -113,7 +113,7 @@ Dashboard
             @foreach($latest_member as $member)
             <li>
               <img src="dist/img/default-user.png" alt="User Image">
-              <a class="users-list-name" href="#">{{$member->name}}</a>
+              <a class="users-list-name" href="member/{{$member->id}}">{{$member->name}}</a>
               <span class="users-list-date">{{$member->created_at}}</span>
             </li>
             @endforeach
@@ -188,7 +188,7 @@ Dashboard
                 <img src="dist/img/default-user.png" alt="User Image">
               </div>
               <div class="product-info">
-                <a href="javascript::;" class="product-title">{{$member->name}} <button class="btn btn-primary btn-sm pull-right"><b>₱ {{$member->money}}</b></button></a>
+                <a href="member/{{$member->id}}" class="product-title">{{$member->name}} <button class="btn btn-primary btn-sm pull-right"><b>₱ {{$member->money}}</b></button></a>
                 <span class="product-description">
                 {{$member->city}}, {{$member->province}}
                 </span>

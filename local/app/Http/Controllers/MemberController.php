@@ -40,9 +40,12 @@ class MemberController extends Controller {
         if ((int)$id == 0){ return view('pages.404'); }
         
         $member = $this->memberQueries->getMemberInfo($id);
+        if (count($member) == 0) { return view('pages.404'); }
+        
         foreach($member as &$row){
             $row->money = $this->memberValidations->formatMoney($row->money);
             $row->sub_money = $this->memberValidations->formatMoney($row->sub_money);
+            $row->created_at = $this->memberValidations->formatDate($row->created_at);
         }
         return view('pages.member.info', compact('member'));
     }

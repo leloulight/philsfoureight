@@ -134,6 +134,12 @@ Member Info
                 {!! Form::text('username', $member[0]->username, ['class' => 'form-control', 'style' => 'text-transform:lowercase', 'readonly', 'style' => 'background-color:White']) !!}
               </div>
             </div>
+            <div class="form-group">
+              {!! Form::label('created_at', 'Date Created', ['class' => 'col-sm-3 control-label']) !!}
+              <div class="col-sm-9">
+                {!! Form::text('created_at', $member[0]->created_at, ['class' => 'form-control', 'style' => 'text-transform:lowercase', 'readonly', 'style' => 'background-color:White']) !!}
+              </div>
+            </div>
             <!-- /.box-body -->
           </div>
         </div>
@@ -144,7 +150,7 @@ Member Info
       <!-- Horizontal Form -->
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Transaction Info</h3>
+          <h3 class="box-title">General Info</h3>
         </div>
         <!-- /.box-header -->
         <div class="form-horizontal">
@@ -152,13 +158,26 @@ Member Info
             <div class="form-group">
               {!! Form::label('money', 'Main Acc. Money', ['class' => 'col-sm-3 control-label']) !!}
               <div class="col-sm-9">
-                {!! Form::text('sponsor_id', $member[0]->money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
+                <div class="input-group">
+                  {!! Form::text('money', $member[0]->money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
+                  <span class="input-group-btn">
+                    <button class="btn btn-success btn-flat" type="button">Logs</button>
+                  </span>
+                  <span class="input-group-btn">
+                    <button class="btn btn-success btn-flat" type="button">Logs</button>
+                  </span>
+                </div>
               </div>
             </div>
             <div class="form-group">
               {!! Form::label('submoney', 'Sub Acc. Money', ['class' => 'col-sm-3 control-label']) !!}
               <div class="col-sm-9">
-                {!! Form::text('sponsor_id', $member[0]->sub_money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
+                <div class="input-group">
+                  {!! Form::text('submoney', $member[0]->sub_money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
+                  <span class="input-group-btn">
+                    <button class="btn btn-success btn-flat" type="button">Logs</button>
+                  </span>
+                </div>
               </div>
             </div>
             <!-- /.box-body -->

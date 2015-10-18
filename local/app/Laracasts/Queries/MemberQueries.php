@@ -24,7 +24,7 @@ class MemberQueries{
 				D.name AS province_name,
 				CONCAT(B.firstname, ' ' , B.middlename, ' ' , B.lastname, ' ' , B.suffix) AS sponsor_name,
 				A.accountno, A.username,
-				A.money,
+				A.money, A.created_at,
 				(SELECT SUM(money) FROM members WHERE main_id = A.id) AS sub_money
 				FROM members A
 				LEFT JOIN members B
