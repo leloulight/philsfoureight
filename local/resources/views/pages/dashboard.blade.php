@@ -12,7 +12,7 @@ Dashboard
     <small>Control Panel</small>
   </h1>
   <ol class="breadcrumb">
-    <li><i class="fa fa-dashboard"></i>Home</li>
+    <li><i class="fa fa-dashboard"></i> Home</li>
     <li class="active">Dashboard</li>
   </ol>
 </section>
