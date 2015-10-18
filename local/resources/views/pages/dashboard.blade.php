@@ -25,7 +25,7 @@ Dashboard
       <div class="small-box bg-aqua">
         <div class="inner">
           <h3>
-            <!-- ₱  -->{!! $widget[0]->admin_money !!}<span style="font-size: 20px;">.{!! $widget[0]->admin_money_dec !!}</span>
+            ₱ {!! $widget[0]->admin_money !!}<span style="font-size: 20px;">.{!! $widget[0]->admin_money_dec !!}</span>
           </h3>
           <p>Company's Income</p>
         </div>
@@ -55,7 +55,7 @@ Dashboard
       <div class="small-box bg-green">
         <div class="inner">
           <h3>
-            <!-- ₱  -->{!! $widget[0]->member_money !!}<span style="font-size: 20px;">.{!! $widget[0]->member_money_dec !!}</span>
+            ₱ {!! $widget[0]->member_money !!}<span style="font-size: 20px;">.{!! $widget[0]->member_money_dec !!}</span>
           </h3>
           <p>Member's Income</p>
         </div>
