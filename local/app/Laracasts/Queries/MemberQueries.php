@@ -76,4 +76,11 @@ class MemberQueries{
 		$result = DB::select($sql, $param);
 		return $result;
 	}
+
+	public function getSubInfo($id) {
+		$result = DB::table('members')
+						->where('main_id', '=', $id)
+						->paginate(15);
+		return $result;
+	}
 }

@@ -178,7 +178,7 @@ Member Info
                 <div class="input-group">
                   {!! Form::text('submoney', $member[0]->sub_money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
                   <span class="input-group-btn">
-                    <a href="" class="btn btn-success btn-flat">Logs</a>
+                    <a href="{{$member[0]->id}}/sub" class="btn btn-primary btn-flat">View</a>
                   </span>
                 </div>
               </div>

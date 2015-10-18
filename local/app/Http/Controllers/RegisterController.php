@@ -125,11 +125,11 @@ class RegisterController extends Controller
                 // Insert P500 to Admin
                 $money_log_insert = $this->pushMoneyLog(10000, 500, 'registration-credit', 'New member [sub_account] [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
 
-                // Give P50 to Sponsor Id
-                if ($inactive_id != 10000) {
-                    $money_log_insert = $this->pushMoneyLog($member_id, 50, 'referral-credit', 'Direct Referral Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
-                    $money_log_insert = $this->pushMoneyLog(10000, -50, 'referral-debit', 'Direct Referral Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
-                }
+                // // Give P50 to Sponsor Id
+                // if ($inactive_id != 10000) {
+                //     $money_log_insert = $this->pushMoneyLog($member_id, 50, 'referral-credit', 'Direct Referral Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                //     $money_log_insert = $this->pushMoneyLog(10000, -50, 'referral-debit', 'Direct Referral Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                // }
 
                 // Distribution of unilevel bonus
                 foreach ($unilevelList as $key) {

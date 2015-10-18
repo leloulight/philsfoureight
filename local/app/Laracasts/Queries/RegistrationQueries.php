@@ -305,7 +305,7 @@ class RegistrationQueries{
 			case 4: $sql = $sql . " WHERE unity_three_status = 2 AND unity_four IS NULL AND unity_four_status = 0 "; break;
 			case 5: $sql = $sql . " WHERE unity_four_status = 2 AND unity_five IS NULL AND unity_five_status = 0 "; break;
 		}
-		$sql = $sql . " ORDER BY id, activated_at LIMIT 1";
+		$sql = $sql . " ORDER BY activated_at LIMIT 1";
 		$param = array();
 		$result = DB::select($sql, $param);
 		if (count($result) == 1) {
@@ -324,7 +324,7 @@ class RegistrationQueries{
 			case 4: $sql = $sql . " WHERE unity_three_status = 2 AND unity_four_status = 0 "; break;
 			case 5: $sql = $sql . " WHERE unity_four_status = 2 AND unity_five_status = 0 "; break;
 		}
-		$sql = $sql . " ORDER BY id, activated_at LIMIT 1";
+		$sql = $sql . " ORDER BY activated_at LIMIT 1";
 		$param = array();
 		$result = DB::select($sql, $param);
 		if (count($result) == 1) {

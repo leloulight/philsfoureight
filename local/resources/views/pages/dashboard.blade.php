@@ -152,7 +152,7 @@ Dashboard
                 
                  @foreach($reward_list as $member)
                   <tr>
-                    <td><a href="pages/examples/invoice.html">{{$member->accountno}}</a></td>
+                    <td><a href="">{{$member->accountno}}</a></td>
                     <td>{{$member->name}}</td>
                     <td><span class="label {{$member->level_status}}">Level {{$member->level}}</span></td>
                     <td>
