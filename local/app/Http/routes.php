@@ -20,6 +20,7 @@ Route::get('/','DashboardController@index');
 
 Route::get('member','MemberController@index');
 Route::get('member/{id}','MemberController@info');
+Route::get('member/{id}/transactions','MemberController@transactions');
 Route::get('member/get_list', 'MemberController@get_list');
 
 Route::get('register', 'RegisterController@index');

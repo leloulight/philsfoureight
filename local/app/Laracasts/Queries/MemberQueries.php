@@ -24,8 +24,13 @@ class MemberQueries{
 				D.name AS province_name,
 				CONCAT(B.firstname, ' ' , B.middlename, ' ' , B.lastname, ' ' , B.suffix) AS sponsor_name,
 				A.accountno, A.username,
-				A.money, A.created_at,
-				(SELECT SUM(money) FROM members WHERE main_id = A.id) AS sub_money
+				A.money, A.created_at, A.status,
+				(SELECT SUM(money) FROM members WHERE main_id = A.id) AS sub_money,
+				CASE A.status 
+				WHEN 0 THEN 'Account is inactive.'
+				ELSE IFNULL((SELECT (LOG) FROM money_log WHERE member_id = A.id AND TYPE = 'reward-credit' ORDER BY id DESC LIMIT 1), 'Pending on Reward Program Level 1') 
+				END AS reward_status,
+				(SELECT COUNT(id) FROM members WHERE main_id = A.id) AS total_sub
 				FROM members A
 				LEFT JOIN members B
 				ON A.unilevel_id = B.id
@@ -36,6 +41,36 @@ class MemberQueries{
 				WHERE A.id = :id";
 		$param = array(
 			":id" => $id
+		);
+
+		$result = DB::select($sql, $param);
+		return $result;
+	}
+
+	public function getMemberTransactions($id) {
+		$result = DB::table('money_log')
+						->where('member_id', '=', $id)
+						->orderBy('created_at', 'desc')
+						->paginate(15);
+		return $result;
+	}
+
+	public function getTransactionSummary($id) {
+		$sql = "SELECT
+				(SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE id = :id) AS name,
+				(SELECT IFNULL(SUM(amount), 0) FROM money_log WHERE member_id = :rf_id AND TYPE = 'referral-credit') AS referral_credit,
+				(
+					(SELECT IFNULL(SUM(amount), 0) FROM money_log WHERE member_id = :rc_id AND TYPE = 'reward-credit') - 
+					(SELECT IFNULL(SUM(amount), 0) FROM money_log WHERE member_id = :rd_id AND TYPE = 'reward-debit')
+				) AS reward_program,
+				(SELECT IFNULL(SUM(amount), 0) FROM money_log WHERE member_id = :un_id AND TYPE = 'unilevel-credit') AS unilevel_bonus,
+				(0) AS unilevel_transaction";
+		$param = array(
+			":id"		=> $id,
+			":rf_id"	=> $id,
+			":rc_id"	=> $id,
+			":rd_id"	=> $id,
+			":un_id"	=> $id
 		);
 
 		$result = DB::select($sql, $param);

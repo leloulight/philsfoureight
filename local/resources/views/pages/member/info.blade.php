@@ -135,6 +135,12 @@ Member Info
               </div>
             </div>
             <div class="form-group">
+              {!! Form::label('status', 'Status', ['class' => 'col-sm-3 control-label']) !!}
+              <div class="col-sm-3">
+                <span class="badge {{$member[0]->badgeStatus}}">{{$member[0]->badgeStatusLabel}}</span>
+              </div>
+            </div>
+            <div class="form-group">
               {!! Form::label('created_at', 'Date Created', ['class' => 'col-sm-3 control-label']) !!}
               <div class="col-sm-9">
                 {!! Form::text('created_at', $member[0]->created_at, ['class' => 'form-control', 'style' => 'text-transform:lowercase', 'readonly', 'style' => 'background-color:White']) !!}
@@ -161,10 +167,7 @@ Member Info
                 <div class="input-group">
                   {!! Form::text('money', $member[0]->money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
                   <span class="input-group-btn">
-                    <button class="btn btn-success btn-flat" type="button">Logs</button>
-                  </span>
-                  <span class="input-group-btn">
-                    <button class="btn btn-success btn-flat" type="button">Logs</button>
+                    <a href="{{$member[0]->id}}/transactions" class="btn btn-success btn-flat">Logs</a>
                   </span>
                 </div>
               </div>
@@ -175,10 +178,33 @@ Member Info
                 <div class="input-group">
                   {!! Form::text('submoney', $member[0]->sub_money, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
                   <span class="input-group-btn">
-                    <button class="btn btn-success btn-flat" type="button">Logs</button>
+                    <a href="" class="btn btn-success btn-flat">Logs</a>
                   </span>
                 </div>
               </div>
+            </div>
+            <div class="form-group">
+              {!! Form::label('total_sub', 'Total Sub Acc.', ['class' => 'col-sm-3 control-label']) !!}
+              <div class="col-sm-9">
+                <div class="input-group">
+                  {!! Form::text('total_sub', $member[0]->total_sub, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
+                  <span class="input-group-btn">
+                    <a href="" class="btn btn-primary btn-flat">View</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              {!! Form::label('reward', 'Reward Program Status', ['class' => 'col-sm-3 control-label']) !!}
+              <div class="col-sm-9">
+                {!! Form::text('created_at', $member[0]->reward_status, ['class' => 'form-control', 'style' => 'text-transform:lowercase', 'readonly', 'style' => 'background-color:White']) !!}
+              </div>
+            </div>
+            <div class="box-footer">
+              <a class="btn btn-success" href="">Genealogy</a>
+              <a class="btn btn-warning" href="">Unilevel</a>
+              
+              <a class="btn btn-danger pull-right" href="../member">Back</a>
             </div>
             <!-- /.box-body -->
           </div>
