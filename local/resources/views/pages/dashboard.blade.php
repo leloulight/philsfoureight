@@ -176,7 +176,7 @@ Dashboard
     <div class="col-md-4">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Top 5 Earners</h3>
+          <h3 class="box-title">Top Earners</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
