@@ -148,7 +148,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="{{strpos(Request::path(),'member') !== false ? 'active' : ''}}"><a href="/member"><i class="fa fa-users"></i> <span>Member List</span></a></li>
             <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-user-plus"></i> <span>Register Member</span></a></li>
             <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li>
-            <li class="{{Request::path() == 'reward' ? 'active' : ''}}"><a href="/reward"><i class="fa fa-money"></i> <span>Reward Program</span></a></li>
+            <!-- <li class="{{Request::path() == 'reward' ? 'active' : ''}}"><a href="/reward"><i class="fa fa-money"></i> <span>Reward Program</span></a></li> -->
+            
+            <li class="treeview {{strpos(Request::path(),'reward') !== false ? 'active' : ''}}">
+              <a href="::javascript()">
+              <i class="fa fa-share"></i> <span>Reward Program</span>
+              <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu " style="">
+                <li class="{{Request::path() == 'reward' ? 'active' : ''}}"><a href="/reward"><i class="fa fa-circle-o"></i> Summary</a></li>
+                <li class="{{strpos(Request::path(),'reward/pending') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Pending <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'reward/pending') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'reward/pending/1') !== false ? 'active' : ''}}"><a href="/reward/pending/1"><i class="fa fa-circle-o"></i> Level One</a></li>
+                    <li class="{{strpos(Request::path(),'reward/pending/2') !== false ? 'active' : ''}}"><a href="/reward/pending/2"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="{{strpos(Request::path(),'reward/pending/3') !== false ? 'active' : ''}}"><a href="/reward/pending/3"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    <li class="{{strpos(Request::path(),'reward/pending/4') !== false ? 'active' : ''}}"><a href="/reward/pending/4"><i class="fa fa-circle-o"></i> Level Four</a></li>
+                    <li class="{{strpos(Request::path(),'reward/pending/5') !== false ? 'active' : ''}}"><a href="/reward/pending/5"><i class="fa fa-circle-o"></i> Level Five</a></li>
+                  </ul>
+                </li>
+                <li class="{{strpos(Request::path(),'reward/completed') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Completed <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'reward/completed') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'reward/completed/1') !== false ? 'active' : ''}}"><a href="/reward/completed/1"><i class="fa fa-circle-o"></i> Level One</a></li>
+                    <li class="{{strpos(Request::path(),'reward/completed/2') !== false ? 'active' : ''}}"><a href="/reward/completed/2"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="{{strpos(Request::path(),'reward/completed/3') !== false ? 'active' : ''}}"><a href="/reward/completed/3"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    <li class="{{strpos(Request::path(),'reward/completed/4') !== false ? 'active' : ''}}"><a href="/reward/completed/4"><i class="fa fa-circle-o"></i> Level Four</a></li>
+                    <li class="{{strpos(Request::path(),'reward/completed/5') !== false ? 'active' : ''}}"><a href="/reward/completed/5"><i class="fa fa-circle-o"></i> Level Five</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
             <li class="{{Request::path() == 'unilevel' ? 'active' : ''}}"><a href="/unilevel"><i class="fa fa-sitemap"></i> <span>Unilevel</span></a></li>
           </ul><!-- /.sidebar-menu -->
         </section>

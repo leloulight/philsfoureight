@@ -61,4 +61,20 @@ class ApiQueries{
 				$result = DB::select($sql);
 				return $result;
 	}
+
+	public function getRewardMember($level, $id) {
+		$sql = "SELECT * FROM members WHERE ";
+		switch ($level) {
+			case 1: $sql .= "unity_one = :id"; break;
+			case 2: $sql .= "unity_two = :id"; break;
+			case 3: $sql .= "unity_three = :id"; break;
+			case 4: $sql .= "unity_four = :id"; break;
+			case 5: $sql .= "unity_five = :id"; break;
+		}
+		$param = array(
+			":id" => $id
+		);
+		$result = DB::select($sql, $param);
+		return $result;
+	}
 }

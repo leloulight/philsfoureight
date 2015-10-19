@@ -42,12 +42,14 @@
             <tr>
               <th>No.</th>
               <th>Name</th>
+              <th>Type</th>
               <th>Date Activated</th>
             </tr>
             @foreach($reward as $row)
               <tr>
                 <td>{{$row->row_num}}</td>
                 <td>{{$row->lastname}}, {{$row->firstname}} {{$row->suffix}} {{$row->middlename}}</td>
+                <td>{{$row->type}}</td>
                 <td>{{$row->activated_at}}</td>
               </tr>
             @endforeach

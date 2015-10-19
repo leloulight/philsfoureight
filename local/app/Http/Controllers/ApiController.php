@@ -58,6 +58,10 @@ class ApiController extends Controller
         // return response()->json($data);
         //header('Content-Type: application/json');
         return response()->json($data);
-    }    
+    }
 
+    public function getRewardMemberJson($level, $id) {
+        $result = $this->apiQueries->getRewardMember($level, $id);
+        return response()->json($result);
+    }
 }

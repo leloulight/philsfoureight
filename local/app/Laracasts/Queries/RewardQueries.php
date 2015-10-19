@@ -11,36 +11,101 @@ class RewardQueries{
 				'1' AS level,
 				(SELECT COUNT(id) FROM members WHERE STATUS = 1 AND unity_one_status = 0) AS pending,
 				(SELECT COUNT(id) FROM members WHERE STATUS = 1 AND unity_one_status = 2) AS completed,
-				(SELECT id FROM members WHERE STATUS = 1 AND unity_one_status = 1) AS process_id,
-				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_one_status = 1), '--N/A--') AS process_name
+				IFNULL((SELECT id FROM members WHERE STATUS = 1 AND unity_one_status = 1), '--N/A--') AS process_id,
+				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_one_status = 1), '--N/A--') AS process_name,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT accountno FROM members WHERE id = A.main_id)
+					ELSE accountno
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_one_status = 1), '--N/A--') AS process_accountno,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT username FROM members WHERE id = A.main_id)
+					ELSE username
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_one_status = 1), '--N/A--') AS process_username,
+				IFNULL((SELECT TYPE FROM members WHERE STATUS = 1 AND unity_one_status = 1), '--N/A--') AS process_type
 				UNION ALL
 				SELECT 
 				'2' AS level,
 				(SELECT COUNT(id) FROM members WHERE unity_one_status = 2 AND unity_two_status = 0) AS pending,
 				(SELECT COUNT(id) FROM members WHERE unity_one_status = 2 AND unity_two_status = 2) AS completed,
-				(SELECT id FROM members WHERE STATUS = 1 AND unity_two_status = 1) AS process_id,
-				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_two_status = 1), '--N/A--') AS process_name
+				IFNULL((SELECT id FROM members WHERE STATUS = 1 AND unity_two_status = 1), '--N/A--') AS process_id,
+				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_two_status = 1), '--N/A--') AS process_name,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT accountno FROM members WHERE id = A.main_id)
+					ELSE accountno
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_two_status = 1), '--N/A--') AS process_accountno,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT username FROM members WHERE id = A.main_id)
+					ELSE username
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_two_status = 1), '--N/A--') AS process_username,
+				IFNULL((SELECT TYPE FROM members WHERE STATUS = 1 AND unity_two_status = 1), '--N/A--') AS process_type
 				UNION ALL
 				SELECT 
 				'3' AS level,
 				(SELECT COUNT(id) FROM members WHERE unity_two_status = 2 AND unity_three_status = 0) AS pending,
 				(SELECT COUNT(id) FROM members WHERE unity_two_status = 2 AND unity_three_status = 2) AS completed,
-				(SELECT id FROM members WHERE STATUS = 1 AND unity_three_status = 1) AS process_id,
-				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_three_status = 1), '--N/A--') AS process_name
+				IFNULL((SELECT id FROM members WHERE STATUS = 1 AND unity_three_status = 1), '--N/A--') AS process_id,
+				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_three_status = 1), '--N/A--') AS process_name,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT accountno FROM members WHERE id = A.main_id)
+					ELSE accountno
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_three_status = 1), '--N/A--') AS process_accountno,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT username FROM members WHERE id = A.main_id)
+					ELSE username
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_three_status = 1), '--N/A--') AS process_username,
+				IFNULL((SELECT TYPE FROM members WHERE STATUS = 1 AND unity_three_status = 1), '--N/A--') AS process_type
 				UNION ALL
 				SELECT 
 				'4' AS level,
 				(SELECT COUNT(id) FROM members WHERE unity_three_status = 2 AND unity_four_status = 0) AS pending,
 				(SELECT COUNT(id) FROM members WHERE unity_three_status = 2 AND unity_four_status = 2) AS completed,
-				(SELECT id FROM members WHERE STATUS = 1 AND unity_four_status = 1) AS process_id,
-				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_four_status = 1), '--N/A--') AS process_name
+				IFNULL((SELECT id FROM members WHERE STATUS = 1 AND unity_four_status = 1), '--N/A--') AS process_id,
+				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_four_status = 1), '--N/A--') AS process_name,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT accountno FROM members WHERE id = A.main_id)
+					ELSE accountno
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_four_status = 1), '--N/A--') AS process_accountno,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT username FROM members WHERE id = A.main_id)
+					ELSE username
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_four_status = 1), '--N/A--') AS process_username,
+				IFNULL((SELECT TYPE FROM members WHERE STATUS = 1 AND unity_four_status = 1), '--N/A--') AS process_type
 				UNION ALL
 				SELECT 
 				'5' AS level,
 				(SELECT COUNT(id) FROM members WHERE unity_four_status = 2 AND unity_five_status = 0) AS pending,
 				(SELECT COUNT(id) FROM members WHERE unity_four_status = 2 AND unity_five_status = 2) AS completed,
-				(SELECT id FROM members WHERE STATUS = 1 AND unity_five_status = 1) AS process_id,
-				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_five_status = 1), '--N/A--') AS process_name";
+				IFNULL((SELECT id FROM members WHERE STATUS = 1 AND unity_five_status = 1), '--N/A--') AS process_id,
+				IFNULL((SELECT CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) FROM members WHERE STATUS = 1 AND unity_five_status = 1), '--N/A--') AS process_name,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT accountno FROM members WHERE id = A.main_id)
+					ELSE accountno
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_five_status = 1), '--N/A--') AS process_accountno,
+				IFNULL((SELECT  
+					CASE TYPE WHEN 'sub' THEN (SELECT username FROM members WHERE id = A.main_id)
+					ELSE username
+					END
+					FROM members A
+					WHERE STATUS = 1 AND unity_five_status = 1), '--N/A--') AS process_username,
+				IFNULL((SELECT TYPE FROM members WHERE STATUS = 1 AND unity_five_status = 1), '--N/A--') AS process_type";
 
 		$result = DB::select($sql);
 		return $result;

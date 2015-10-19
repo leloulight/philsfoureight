@@ -33,4 +33,5 @@ Route::get('reward/pending/{level}','RewardController@pending');
 Route::get('api/city/{prov_id?}', 'ApiController@getCityJson');
 Route::get('api/province', 'ApiController@getProvinceJson');
 Route::get('api/bargraph', 'ApiController@getDashboardBarGraph');
+Route::get('api/reward/member/{level}/{id}', 'ApiController@getRewardMemberJson');
 
