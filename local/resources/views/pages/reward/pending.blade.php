@@ -49,7 +49,7 @@
               <tr>
                 <td>{{$row->row_num}}</td>
                 <td>{{$row->lastname}}, {{$row->firstname}} {{$row->suffix}} {{$row->middlename}}</td>
-                <td>{{$row->type}}</td>
+                <td>{!! $row->typeSpan !!}</td>
                 <td>{{$row->activated_at}}</td>
               </tr>
             @endforeach

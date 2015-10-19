@@ -13,21 +13,21 @@
 <section class="content-header">
   <h1>
     Reward Program
-    <small>Summary</small>
+    <small>Completed</small>
   </h1>
   <ol class="breadcrumb">
     <li><i class="fa fa-dashboard"></i> Reward Program</li>
-    <li class="active">Summary</li>
+    <li class="active">Completed</li>
   </ol>
 </section>
 <!-- Main content -->
 <section class="content">
   <!-- Your Page Content Here -->
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Reward Program</h3>
+          <h3 class="box-title">Reward Program - Completed List - Level {{$level}}</h3>
           <div class="box-tools">
             <div class="input-group" style="width: 150px;">
               <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -40,36 +40,25 @@
         <div class="box-body table-responsive no-padding">
           <table id="rewardSummary" class="table table-striped">
             <tr>
-              <th>Level</th>
-              <th>Pending</th>
-              <th>Completed</th>
-              <th>Money Distributed</th>
-              <th>New Sub Acc</th>
-              <th>Processing</th>
-              <th>Account No.</th>
-              <th>Username</th>
+              <th>No.</th>
+              <th>Name</th>
               <th>Type</th>
+              <th>Date Completed</th>
+              <th></th>
             </tr>
             @foreach($reward as $row)
               <tr>
-                <td>{{$row->level}}</td>
-                <td><a href="reward/pending/{{$row->level}}">{{$row->pending}}</a></td>
-                <td><a href="reward/completed/{{$row->level}}">{{$row->completed}}</a></td>
-                <td>{{$row->distributed}}</td>
-                <td>{{$row->sub}}</td>
-                @if ($row->process_name == "--N/A--")
-                  <td>{{$row->process_name}}</td>
-                @else
-                  <td><button id="{{$row->level}}-{{$row->process_id}}" class="btn btn-info btn-xs" data-toggle="modal">{{$row->process_name}}</button></td>
-                @endif
-                <td>{{$row->process_accountno}}</td>
-                <td>{{$row->process_username}}</td>
+                <td>{{$row->row_num}}</td>
+                <td>{{$row->lastname}}, {{$row->firstname}} {{$row->suffix}} {{$row->middlename}}</td>
                 <td>{!! $row->typeSpan !!}</td>
+                <td>{{$row->completed_at}}</td>
+                <td><button id="{{$level}}-{{$row->id}}" class="btn btn-info btn-xs" data-toggle="modal">View</button></td>
               </tr>
             @endforeach
           </table>
         </div><!-- /.box-body -->
         <div class="box-footer clearfix">
+          {!! $reward->render() !!}
         </div>
       </div><!-- /.box -->
     </div>

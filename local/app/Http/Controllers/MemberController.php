@@ -26,7 +26,7 @@ class MemberController extends Controller {
         $row_num = Input::get('page', 1);
         $row_num = ($row_num - 1) * 15;
 
-        foreach($members as &$row){
+        foreach($members as &$row) {
             $row->row_num = $row_num += 1;
             $row->money = $this->memberValidations->formatMoney($row->money);
             $row->created_at = $this->memberValidations->formatDate($row->created_at);

@@ -29,6 +29,7 @@ Route::post('register', 'RegisterController@store');
 
 Route::get('reward','RewardController@index');
 Route::get('reward/pending/{level}','RewardController@pending');
+Route::get('reward/completed/{level}','RewardController@completed');
 
 Route::get('api/city/{prov_id?}', 'ApiController@getCityJson');
 Route::get('api/province', 'ApiController@getProvinceJson');

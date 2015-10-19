@@ -9,13 +9,16 @@ use CRUD\Http\Controllers\Controller;
 use Response;
 
 use Laracasts\Queries\ApiQueries as apiQueries;
+use Laracasts\Validations\ApiValidations as apiValidations;
 
 class ApiController extends Controller
 {
     private $apiQueries;
+    private $apiValidations;
 
     public function __construct() {
         $this->apiQueries = new apiQueries;
+        $this->apiValidations = new apiValidations;
     }
 
     public function getCityJson($prov_id=1)
@@ -62,6 +65,22 @@ class ApiController extends Controller
 
     public function getRewardMemberJson($level, $id) {
         $result = $this->apiQueries->getRewardMember($level, $id);
+        $today = $this->apiQueries->getDate();
+
+        foreach ($result as $row) {
+            switch ($level) {
+                case 1: $row->inserted_at = $this->apiValidations->formatDate($row->unity_one_at, $today); break;
+                case 2: $row->inserted_at = $this->apiValidations->formatDate($row->unity_two_at, $today); break;
+                case 3: $row->inserted_at = $this->apiValidations->formatDate($row->unity_three_at, $today); break;
+                case 4: $row->inserted_at = $this->apiValidations->formatDate($row->unity_four_at, $today); break;
+                case 5: $row->inserted_at = $this->apiValidations->formatDate($row->unity_five_at, $today); break;
+            }
+            if ($row->type == "member") {
+                $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->type) . "</span>";
+            } else {
+                $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->type) . "</span>";
+            }
+        }
         return response()->json($result);
     }
 }

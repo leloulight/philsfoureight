@@ -17,4 +17,11 @@ class RewardValidations{
 	public function formatInteger($money) {
 		return number_format($money, 0);
 	}
+
+	public function getTypeClass($status) {
+		switch($status){
+			case 'member': return "bg-blue";break;
+			case 'sub': return "bg-red";break;
+		}
+	}
 }

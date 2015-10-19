@@ -147,7 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="{{Request::path() == '/' ? 'active' : ''}}"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="{{strpos(Request::path(),'member') !== false ? 'active' : ''}}"><a href="/member"><i class="fa fa-users"></i> <span>Member List</span></a></li>
             <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-user-plus"></i> <span>Register Member</span></a></li>
-            <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li>
+            <!-- <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li> -->
             <!-- <li class="{{Request::path() == 'reward' ? 'active' : ''}}"><a href="/reward"><i class="fa fa-money"></i> <span>Reward Program</span></a></li> -->
             
             <li class="treeview {{strpos(Request::path(),'reward') !== false ? 'active' : ''}}">
@@ -179,7 +179,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
               </ul>
             </li>
-            <li class="{{Request::path() == 'unilevel' ? 'active' : ''}}"><a href="/unilevel"><i class="fa fa-sitemap"></i> <span>Unilevel</span></a></li>
+            <!-- <li class="{{Request::path() == 'unilevel' ? 'active' : ''}}"><a href="/unilevel"><i class="fa fa-sitemap"></i> <span>Unilevel</span></a></li> -->
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

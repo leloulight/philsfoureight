@@ -36,6 +36,13 @@ class RewardController extends Controller
     		}
             $row->distributed = $this->rewardValidations->formatMoney($distributed * $row->completed);
             $row->sub = $this->rewardValidations->formatInteger($sub * $row->completed);
+            if ($row->process_type == "member") {
+                $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->process_type) . "</span>";
+            } elseif ($row->process_type == "sub") {
+                $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->process_type) . "</span>";
+            } else {
+                $row->typeSpan = $row->process_type;
+            }
         }
     	return view('pages.reward', compact('reward'));
     }
@@ -52,7 +59,46 @@ class RewardController extends Controller
         foreach($reward as &$row){
             $row->row_num = $row_num += 1;
             $row->activated_at = $this->rewardValidations->formatDate($row->activated_at);
+
+            if ($row->type == "member") {
+                $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->type) . "</span>";
+            } elseif ($row->type == "sub") {
+                $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->type) . "</span>";
+            } else {
+                $row->typeSpan = $row->process_type;
+            }
         }
     	return view('pages.reward.pending', compact('reward', 'level'));
+    }
+
+    public function completed($level) {
+        if ((int)$level == 0){ return view('pages.404'); }
+        if ($level > 5 || $level < 1){ return view('pages.404'); }
+
+        $reward = $this->rewardQueries->getCompleted($level);
+        
+        $row_num = Input::get('page', 1);
+        $row_num = ($row_num - 1) * 15;
+
+        foreach($reward as &$row){
+            $row->row_num = $row_num += 1;
+
+            switch ($level) {
+                case 1: $row->completed_at = $this->rewardValidations->formatDate($row->unity_one_status_at); break;
+                case 2: $row->completed_at = $this->rewardValidations->formatDate($row->unity_two_status_at); break;
+                case 3: $row->completed_at = $this->rewardValidations->formatDate($row->unity_three_status_at); break;
+                case 4: $row->completed_at = $this->rewardValidations->formatDate($row->unity_four_status_at); break;
+                case 5: $row->completed_at = $this->rewardValidations->formatDate($row->unity_five_status_at); break;
+            }
+
+            if ($row->type == "member") {
+                $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->type) . "</span>";
+            } elseif ($row->type == "sub") {
+                $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->type) . "</span>";
+            } else {
+                $row->typeSpan = $row->process_type;
+            }
+        }
+        return view('pages.reward.completed', compact('reward', 'level'));
     }
 }

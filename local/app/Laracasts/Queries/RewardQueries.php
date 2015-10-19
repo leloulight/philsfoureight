@@ -154,4 +154,53 @@ class RewardQueries{
 		}
 		return $result;
 	}
+
+	public function getCompleted($level) {
+		$result = NULL;
+		switch ($level) {
+			case 1: 
+				$result = DB::table('members')
+						->where('status', '=', 1)
+						->where('type', '<>', 'admin')
+						->where('unity_one_status', '=', 2)
+						->orderby('unity_one_status_at', 'desc')
+						->orderby('id', 'DESC')
+						->paginate(15);
+				break;
+			case 2:
+				$result = DB::table('members')
+						->where('unity_one_status', '=', 2)
+						->where('unity_two_status', '=', 2)
+						->orderby('unity_two_status_at', 'desc')
+						->orderby('id', 'DESC')
+						->paginate(15);
+				break;
+			case 3:
+				$result = DB::table('members')
+						->where('unity_two_status', '=', 2)
+						->where('unity_three_status', '=', 2)
+						->orderby('unity_three_status_at', 'desc')
+						->orderby('id', 'DESC')
+						->paginate(15);
+				break;
+			case 4:
+				$result = DB::table('members')
+						->where('unity_three_status', '=', 2)
+						->where('unity_four_status', '=', 2)
+						->orderby('unity_four_status_at', 'desc')
+						->orderby('id', 'DESC')
+						->paginate(15);
+				break;
+			case 5:
+				$result = DB::table('members')
+						->where('unity_four_status', '=', 2)
+						->where('unity_five_status', '=', 2)
+						->orderby('unity_five_status_at', 'desc')
+						->orderby('id', 'DESC')
+						->paginate(15);
+				break;
+
+		}
+		return $result;
+	}
 }
