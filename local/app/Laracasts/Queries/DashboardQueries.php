@@ -12,7 +12,7 @@ class DashboardQueries{
 					created_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)) AS 'admin_money',
 				(SELECT IFNULL(SUM(amount), 0) FROM money_log WHERE NOT member_id = 10000 AND 
 					created_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)) AS 'member_money',
-				(SELECT COUNT(id) FROM members WHERE TYPE = 'member' AND 
+				(SELECT COUNT(id) FROM members WHERE TYPE != 'admin' AND TYPE != 'sub' AND 
 					created_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)) AS 'new_registration',
 				(SELECT COUNT(id) FROM money_log WHERE LOG LIKE '%Completed Reward Program%' AND 
 					NOT member_id = 10000 AND created_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)) AS 'reward_complete'";
@@ -23,7 +23,7 @@ class DashboardQueries{
 
 	public function latestMember() {
 		$sql = "SELECT id, CONCAT(firstname, ' ', lastname) AS 'name', created_at 
-				FROM members WHERE type = 'member' ORDER BY id DESC LIMIT 8";
+				FROM members WHERE type != 'admin' AND type != 'sub' ORDER BY id DESC LIMIT 8";
 		$result = DB::select($sql);
 		return $result;
 	}
@@ -35,7 +35,7 @@ class DashboardQueries{
 	}
 
 	public function getTopEarner() {
-		$sql = "SELECT A.id, CONCAT(A.firstname, ' ', A.middlename, ' ',A.lastname, ' ', A.suffix) AS name, 
+		$sql = "SELECT A.id, CONCAT(A.firstname, ' ', A.middlename, ' ',A.lastname, ' ', IFNULL(A.suffix, '')) AS name, 
 				B.name AS city, C.name AS province, 
 				(SELECT SUM(money) FROM members WHERE id = A.id OR main_id = A.id) AS money
 				FROM members A 
@@ -43,7 +43,8 @@ class DashboardQueries{
 				ON A.city_id = B.id
 				INNER JOIN province C
 				ON A.province_id = C.id
-				WHERE A.type = 'member' 
+				WHERE A.type != 'admin' 
+				AND A.type != 'sub'
 				ORDER BY money DESC LIMIT 5";
 		$result = DB::select($sql);
 		return $result;

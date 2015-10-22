@@ -19,41 +19,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('dist/css/ionicons.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect.
-    -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/skin-blue.min.css')}}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    
   </head>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
@@ -61,7 +28,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>P</b>48</span>
           <!-- logo for regular state and mobile devices -->
@@ -146,13 +113,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Optionally, you can add icons to the links -->
             <li class="{{Request::path() == '/' ? 'active' : ''}}"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="{{strpos(Request::path(),'member') !== false ? 'active' : ''}}"><a href="/member"><i class="fa fa-users"></i> <span>Member List</span></a></li>
-            <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-user-plus"></i> <span>Register Member</span></a></li>
+            
+            <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
+              <a href="::javascript()">
+              <i class="fa fa-user-plus"></i> <span>Register Member</span>
+              <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu " style="">
+                <li class="{{Request::path() == 'register/member' ? 'active' : ''}}"><a href="/register/member"><i class="fa fa-circle-o"></i> Member</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> Sub Account</a></li>
+                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href="/register/stockist"><i class="fa fa-circle-o"></i> Stockist</a></li>
+              </ul>
+            </li>
+            
             <!-- <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li> -->
-            <!-- <li class="{{Request::path() == 'reward' ? 'active' : ''}}"><a href="/reward"><i class="fa fa-money"></i> <span>Reward Program</span></a></li> -->
             
             <li class="treeview {{strpos(Request::path(),'reward') !== false ? 'active' : ''}}">
               <a href="::javascript()">
-              <i class="fa fa-share"></i> <span>Reward Program</span>
+              <i class="fa fa-money"></i> <span>Reward Program</span>
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
@@ -175,6 +153,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <li class="{{strpos(Request::path(),'reward/completed/3') !== false ? 'active' : ''}}"><a href="/reward/completed/3"><i class="fa fa-circle-o"></i> Level Three</a></li>
                     <li class="{{strpos(Request::path(),'reward/completed/4') !== false ? 'active' : ''}}"><a href="/reward/completed/4"><i class="fa fa-circle-o"></i> Level Four</a></li>
                     <li class="{{strpos(Request::path(),'reward/completed/5') !== false ? 'active' : ''}}"><a href="/reward/completed/5"><i class="fa fa-circle-o"></i> Level Five</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview {{strpos(Request::path(),'settings') !== false ? 'active' : ''}}">
+              <a href="::javascript()">
+              <i class="fa fa-gears"></i> <span>Settings</span>
+              <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu " style="">
+                <li class="{{strpos(Request::path(),'settings/accountno') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Account No. <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'settings/accountno') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'settings/accountno/summary') !== false ? 'active' : ''}}"><a href="/settings/accountno/summary"><i class="fa fa-circle-o"></i> Summary Overview</a></li>
+                    <li class="{{strpos(Request::path(),'settings/accountno/assign') !== false ? 'active' : ''}}"><a href="/settings/accountno/assign"><i class="fa fa-circle-o"></i> Assign Account No.</a></li>
+                    <li class="{{strpos(Request::path(),'settings/accountno/generate') !== false ? 'active' : ''}}"><a href="/settings/accountno/generate"><i class="fa fa-circle-o"></i> Generate New</a></li>
                   </ul>
                 </li>
               </ul>

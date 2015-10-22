@@ -81,7 +81,7 @@ class MemberController extends Controller {
         if ((int)$id == 0){ return view('pages.404'); }
         
         $member = $this->memberQueries->getSubInfo($id);
-        if (count($member) == 0) { return view('pages.404'); }
+        // if (count($member) == 0) { return view('pages.404'); }
 
         $row_num = Input::get('page', 1);
         $row_num = ($row_num - 1) * 15;

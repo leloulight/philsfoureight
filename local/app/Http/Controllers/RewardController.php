@@ -64,6 +64,8 @@ class RewardController extends Controller
                 $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->type) . "</span>";
             } elseif ($row->type == "sub") {
                 $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->type) . "</span>";
+            } elseif ($row->type == "stockist") {
+                $row->typeSpan = "<span class=\"badge bg-gray\">" . ucfirst($row->type) . "</span>";
             } else {
                 $row->typeSpan = $row->process_type;
             }
@@ -95,6 +97,8 @@ class RewardController extends Controller
                 $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->type) . "</span>";
             } elseif ($row->type == "sub") {
                 $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->type) . "</span>";
+            } elseif ($row->type == "stockist") {
+                $row->typeSpan = "<span class=\"badge bg-gray\">" . ucfirst($row->type) . "</span>";
             } else {
                 $row->typeSpan = $row->process_type;
             }

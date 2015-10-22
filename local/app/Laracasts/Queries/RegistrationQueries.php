@@ -68,8 +68,8 @@ class RegistrationQueries{
 	}
 
 	public function insertMainAccount($post) {
-		$sql = "INSERT INTO members (firstname, middlename, lastname, suffix, mobileno, phoneno, birthdate, email, street_address, city_id, province_id, gender, unilevel_id, username, password, accountno, guid, status, type, main_id) 
-				VALUES(:firstname, :middlename, :lastname, :suffix, :mobileno, :phoneno, :birthdate, :email, :street_address, :city_id, :province_id, :gender, :unilevel_id, :username, :password, :accountno, :guid, :status, :type, :main_id)";
+		$sql = "INSERT INTO members (firstname, middlename, lastname, suffix, mobileno, phoneno, birthdate, email, street_address, city_id, province_id, gender, unilevel_id, username, password, accountno, guid, status, type, main_id, stockist_id, upline_id) 
+				VALUES(:firstname, :middlename, :lastname, :suffix, :mobileno, :phoneno, :birthdate, :email, :street_address, :city_id, :province_id, :gender, :unilevel_id, :username, :password, :accountno, :guid, :status, :type, :main_id, :stockist_id, :upline_id)";
 		
 		$param = array(
 			":firstname"		=> $post['firstname'],
@@ -91,7 +91,9 @@ class RegistrationQueries{
 			":guid"				=> NULL,
 			":status"			=> 0,
 			":type"				=> (isset($post['type']) ? $post['type'] : 'member'),
-			":main_id"			=> (isset($post['main_id']) ? $post['main_id'] : NULL)
+			":main_id"			=> (isset($post['main_id']) ? $post['main_id'] : NULL),
+			":stockist_id"		=> $post['stockist_id'],
+			":upline_id"		=> $post['upline_id']
 		);
 
 		try{
@@ -382,6 +384,41 @@ class RegistrationQueries{
 		}
 	}
 
+	public function getUplineList($member_id) {
+		$sql = "SELECT	
+					IFNULL(A.upline_id, 0) AS 'first', 
+					IFNULL(B.upline_id, 0) AS 'second',
+					IFNULL(C.upline_id, 0) AS 'third',
+					IFNULL(D.upline_id, 0) AS 'forth',
+					IFNULL(E.upline_id, 0) AS 'fifth',
+					IFNULL(F.upline_id, 0) AS 'sixth',
+					IFNULL(G.upline_id, 0) AS 'seventh'
+				FROM members A
+				LEFT JOIN members B
+				ON B.id = A.upline_id
+				LEFT JOIN members C
+				ON C.id = B.upline_id
+				LEFT JOIN members D
+				ON D.id = C.upline_id
+				LEFT JOIN members E
+				ON E.id = D.upline_id
+				LEFT JOIN members F
+				ON F.id = E.upline_id
+				LEFT JOIN members G
+				ON G.id = F.upline_id
+				WHERE A.id = :id";
+		$param = array(
+			":id" => $member_id
+		);
+		$result = DB::select($sql, $param);
+		if (count($result) == 1) {
+			$list = array($result[0]->first, $result[0]->second, $result[0]->third, $result[0]->forth, $result[0]->fifth, $result[0]->sixth, $result[0]->seventh);
+			return $list;
+		} else {
+			return NULL;
+		}
+	}
+
 	public function getMemberName($member_id) {
 		$sql = "SELECT firstname, middlename, lastname, suffix, accountno, type, main_id FROM members WHERE id = :id LIMIT 1";
 		$param = array(
@@ -428,10 +465,131 @@ class RegistrationQueries{
 		);
 
 		$result = DB::select($sql, $param);
+
 		if ($result[0]->type == "sub") {
 			$replace = substr($result[0]->firstname, -6);
 			$result[0]->firstname = str_replace($replace, "", $result[0]->firstname);
 		}
 		return $result;
+	}
+
+	public function getStockistId($accountno){
+		$sql = "SELECT stockist_id FROM account_numbers WHERE accountno = :accountno";
+		$param = array(
+			":accountno" => $accountno
+		);
+
+		$result = DB::select($sql, $param);
+		if (count($result) == 0) {
+			return NULL;
+		} else {
+			return $result[0]->stockist_id;
+		}
+	}
+
+	public function validStockistMember($username, $stockist_id) {
+		$sql = "SELECT status FROM members WHERE username = :username AND stockist_id = :stockist_id";
+		$param = array(
+			":username" => $username,
+			":stockist_id" => $stockist_id
+		);
+
+		$result = DB::select($sql, $param);
+		return $result;
+	}
+
+	public function getStockistInactive($id) {
+		$sql = "SELECT id FROM members WHERE stockist_id = :id AND status = 0 ORDER BY id, created_at LIMIT 1";
+		$param = array(
+			":id" => $id
+		);
+		$result = DB::select($sql, $param);
+		return $result[0]->id;
+	}
+
+	public function getMemberId($id) {
+		$sql = "SELECT id FROM members WHERE username = :id LIMIT 1";
+		$param = array(
+			":id" => $id
+		);
+		$result = DB::select($sql, $param);
+		return $result[0]->id;
+	}
+
+	public function getMemberBinaries($id) {
+		$sql = "SELECT binary_left, binary_right FROM members WHERE id = :id";
+		$param = array(
+			":id" => $id
+		);
+
+		$result = DB::select($sql, $param);
+		return $result;
+	}
+
+	public function updateMemberBinaryLeft($id, $member_id) {
+		$sql = "UPDATE members SET binary_left = :member_id WHERE id = :id LIMIT 1";
+		$param = array(
+			":member_id" => $member_id,
+			":id" => $id
+		);
+		$result = DB::update($sql, $param);
+	}
+
+	public function updateMemberBinaryRight($id, $member_id) {
+		$sql = "UPDATE members SET binary_right = :member_id, status = 1, activated_at = CURRENT_TIMESTAMP WHERE id = :id LIMIT 1";
+		$param = array(
+			":member_id" => $member_id,
+			":id" => $id
+		);
+		$result = DB::update($sql, $param);
+	}
+
+	public function updateAccountNumbers($accountno, $stockist_id, $member_id) {
+		$sql = "UPDATE account_numbers SET member_id = :member_id, updated_at = CURRENT_TIMESTAMP WHERE accountno = :accountno AND stockist_id = :stockist_id";
+		$param = array(
+			":member_id" => $member_id,
+			":accountno" => $accountno,
+			":stockist_id" => $stockist_id
+		);
+		$result = DB::update($sql, $param);
+	}
+
+	public function validUplineId($id) {
+		$sql = "SELECT status FROM members WHERE id = :id LIMIT 1";
+		$param = array(
+			":id" => $id
+		);
+		$result = DB::select($sql, $param);
+		if ($result[0]->status == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function validStockistRegAccoutnNo($accountno) {
+		$sql = "SELECT * FROM account_numbers WHERE accountno = :accountno";
+		$param = array(
+			":accountno" => $accountno
+		);
+		$result = DB::select($sql, $param);
+		if (count($result) == 0){
+			return false;
+		} else {
+			if ($result[0]->stockist_id == 10000) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	public function updateNewStockistId($id) {
+		$sql = "UPDATE members SET stockist_id = :stockist_id WHERE id = :id LIMIT 1";
+		$param = array(
+			":stockist_id" => $id,
+			":id" => $id
+		);
+		$result = DB::update($sql, $param);
 	}
 }

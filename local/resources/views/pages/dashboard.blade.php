@@ -149,8 +149,10 @@ Dashboard
                 </tr>
               </thead>
               <tbody>
-                
-                 @foreach($reward_list as $member)
+                @if (count($reward_list) == 0)
+                  <tr><td colspan="4">No data was returned.</td></tr>
+                @else
+                  @foreach($reward_list as $member)
                   <tr>
                     <td><a href="">{{$member->accountno}}</a></td>
                     <td>{{$member->name}}</td>
@@ -160,6 +162,7 @@ Dashboard
                     </td>
                   </tr>
                   @endforeach
+                @endif
               </tbody>
             </table>
           </div>
@@ -167,7 +170,7 @@ Dashboard
         </div>
         <!-- /.box-body -->
         <div class="box-footer clearfix">
-          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All</a>
+          <a href="/reward" class="btn btn-sm btn-default btn-flat pull-right">View All</a>
         </div>
         <!-- /.box-footer -->
       </div>
@@ -181,20 +184,25 @@ Dashboard
         <!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-            
-            @foreach($top_earner as $member)
-            <li class="item">
-              <div class="product-img">
-                <img src="dist/img/default-user.png" alt="User Image">
-              </div>
-              <div class="product-info">
-                <a href="member/{{$member->id}}" class="product-title">{{$member->name}} <button class="btn btn-primary btn-sm pull-right"><b>₱ {{$member->money}}</b></button></a>
-                <span class="product-description">
-                {{$member->city}}, {{$member->province}}
-                </span>
-              </div>
-            </li>
+            @if(count($top_earner) == 0)
+              <li class="item">
+                No data was returned.
+              </li>
+            @else
+              @foreach($top_earner as $member)
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-user.png" alt="User Image">
+                </div>
+                <div class="product-info">
+                  <a href="member/{{$member->id}}" class="product-title">{{$member->name}} <button class="btn btn-primary btn-sm pull-right"><b>₱ {{$member->money}}</b></button></a>
+                  <span class="product-description">
+                  {{$member->city}}, {{$member->province}}
+                  </span>
+                </div>
+              </li>
             @endforeach
+            @endif
             <!-- /.item -->
           </ul>
         </div>

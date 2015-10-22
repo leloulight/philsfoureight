@@ -77,8 +77,10 @@ class ApiController extends Controller
             }
             if ($row->type == "member") {
                 $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->type) . "</span>";
-            } else {
+            } elseif ($row->type == "sub") {
                 $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->type) . "</span>";
+            } elseif ($row->type == "stockist") {
+                $row->typeSpan = "<span class=\"badge bg-gray\">" . ucfirst($row->type) . "</span>";
             }
         }
         return response()->json($result);

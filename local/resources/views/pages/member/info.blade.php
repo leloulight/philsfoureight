@@ -188,9 +188,9 @@ Member Info
               <div class="col-sm-9">
                 <div class="input-group">
                   {!! Form::text('total_sub', $member[0]->total_sub, ['class' => 'form-control', 'readonly', 'style' => 'background-color:White']) !!}
-                  <span class="input-group-btn">
+                  <!-- <span class="input-group-btn">
                     <a href="" class="btn btn-primary btn-flat">View</a>
-                  </span>
+                  </span> -->
                 </div>
               </div>
             </div>
@@ -201,10 +201,9 @@ Member Info
               </div>
             </div>
             <div class="box-footer">
-              <a class="btn btn-success" href="">Genealogy</a>
+              <a class="btn btn-success" href="/genealogy/{{$member[0]->id}}">Genealogy</a>
               <a class="btn btn-warning" href="">Unilevel</a>
-              
-              <a class="btn btn-danger pull-right" href="../member">Back</a>
+              <a class="btn btn-danger pull-right" href="/member">Back</a>
             </div>
             <!-- /.box-body -->
           </div>

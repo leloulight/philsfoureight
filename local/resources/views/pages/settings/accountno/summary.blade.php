@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-	Member Transaction
+	Account No. Summary
 @stop
 
 @section('styles')
@@ -12,12 +12,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    {{$summary[0]->name}}
-    <small>Overview</small>
+    Account No. Summary
+    <small>Account No.</small>
   </h1>
   <ol class="breadcrumb">
-    <li><i class="fa fa-dashboard"></i> Member</li>
-    <li class="active">Transaction</li>
+    <li><i class="fa fa-dashboard"></i> Account No.</li>
+    <li class="active">Summary</li>
   </ol>
 </section>
 <!-- Main content -->
@@ -27,40 +27,46 @@
     <div class="col-md-3">
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Referral Credits</h3>
+          <h3 class="box-title">Stockist Id</h3>
         </div><!-- /.box-header -->
         <div class="box-body" style="display: block;">
-          ₱ {{$summary[0]->referral_credit}}
+          <div class="form-group">
+            <select class="form-control" name="stockist_list" id="stockist_list">
+              @foreach($stockist_list as $row)
+                <option value="{{$row->id}}" {{$id == $row->id ? 'selected' : ''}}>{{$row->lastname}}, {{$row->firstname}}</option>
+              @endforeach
+            </select>
+          </div>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
     </div>
     <div class="col-md-3">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Reward Program</h3>
+          <h3 class="box-title">No. of Cards</h3>
         </div><!-- /.box-header -->
         <div class="box-body" style="display: block;">
-          ₱ {{$summary[0]->reward_program}}
+          {{$summary_widget[0]->total_cards}}
         </div><!-- /.box-body -->
       </div><!-- /.box -->
     </div>
     <div class="col-md-3">
       <div class="box box-warning">
         <div class="box-header with-border">
-          <h3 class="box-title">Unilevel Bonus</h3>
+          <h3 class="box-title">Used Cards</h3>
         </div><!-- /.box-header -->
         <div class="box-body" style="display: block;">
-          ₱ {{$summary[0]->unilevel_bonus}}
+          {{$summary_widget[0]->total_used}}
         </div><!-- /.box-body -->
       </div><!-- /.box -->
     </div>
     <div class="col-md-3">
       <div class="box box-danger">
         <div class="box-header with-border">
-          <h3 class="box-title">Unilevel Transactions</h3>
+          <h3 class="box-title">Unused Cards</h3>
         </div><!-- /.box-header -->
         <div class="box-body" style="display: block;">
-          ₱ {{$summary[0]->unilevel_transaction}}
+          {{$summary_widget[0]->total_unused}}
         </div><!-- /.box-body -->
       </div><!-- /.box -->
     </div>
@@ -69,7 +75,7 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Transaction History</h3>
+          <h3 class="box-title">Account <No class=""></No></h3>
           <div class="box-tools">
             <!-- <div class="input-group" style="width: 150px;">
               <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -83,22 +89,24 @@
           <table class="table table-striped">
             <tr>
               <th>No.</th>
-              <th>Log</th>
-              <th>Amount</th>
-              <th>Date</th>
+              <th>Account No.</th>
+              <th>Member</th>
+              <th>Updated At</th>
+              <th></th>
             </tr>
-            @foreach($transactions as $row)
-              <tr>
-                <td>{{$row->row_num}}</td>
-                <td>{{$row->log}}</td>
-                <td>{{$row->amount}}</td>
-                <td>{{$row->created_at}}</td>
-              </tr>
+            @foreach($summary_list as $row)
+            <tr>
+              <td>{{$row->row_num}}</td>
+              <td><span class="badge {{$row->name == NULL ? 'bg-red' : 'bg-blue'}}">{{$row->accountno}}</span></td>
+              <td>{{$row->name}}</td>
+              <td>{{$row->updated_at}}</td>
+              <td></td>
+            </tr>
             @endforeach
           </table>
         </div><!-- /.box-body -->
         <div class="box-footer clearfix">
-          {!! $transactions->render() !!}
+        {!!$summary_list->render()!!}
         </div>
       </div><!-- /.box -->
     </div>
@@ -107,5 +115,12 @@
 @stop
 
 @section('scripts')
-
+<script>
+$(function () {
+  $(".content").on('change', '#stockist_list', function() {
+    var dd = this;
+    window.location = "/settings/accountno/summary/" + dd.value;
+  });
+});
+</script>
 @stop

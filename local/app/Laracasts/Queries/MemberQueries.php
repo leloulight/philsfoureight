@@ -10,7 +10,7 @@ class MemberQueries{
 		$sql = "SELECT  A.*, COUNT(B.id) AS sub FROM members A
 				LEFT JOIN members B ON A.id = B.main_id
 				GROUP BY A.id
-				HAVING NOT A.type = 'sub' AND NOT A.type = 'admin'
+				HAVING A.type != 'sub' AND A.type != 'admin'
 				ORDER BY A.id DESC";
 		
 		$result = DB::table('member_list')->paginate(15);

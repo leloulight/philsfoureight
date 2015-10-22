@@ -10,7 +10,7 @@
 	};
 
 	var load_city = function() {
-	    $.get('api/city', function(o) {
+	    $.get('/api/city', function(o) {
 	        var output = '';
 	        for (var i = 0; i < o.length; i++) {
     			output += '<option value=' + o[i].id + '>' + o[i].name + '</td>';
@@ -20,7 +20,7 @@
 	};
 
 	var load_province = function() {
-	    $.get('api/province', function(o) {
+	    $.get('/api/province', function(o) {
 	        var output = '';
 	        for (var i = 0; i < o.length; i++) {
     			output += '<option value=' + o[i].id + '>' + o[i].name + '</td>';
@@ -52,7 +52,7 @@ var Event = function() {
 
 	var get_city = function(prov_id) {
 		$("#city").empty();
-	    $.get('api/city/' + prov_id, function(o) {
+	    $.get('/api/city/' + prov_id, function(o) {
 	        var output = '';
 	        for (var i = 0; i < o.length; i++) {
     			output += '<option value=' + o[i].id + '>' + o[i].name + '</td>';

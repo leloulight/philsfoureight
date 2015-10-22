@@ -22,6 +22,7 @@ class RewardValidations{
 		switch($status){
 			case 'member': return "bg-blue";break;
 			case 'sub': return "bg-red";break;
+			case 'stockist': return "bg-gray";break;
 		}
 	}
 }
