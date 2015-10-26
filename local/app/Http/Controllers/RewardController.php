@@ -40,6 +40,8 @@ class RewardController extends Controller
                 $row->typeSpan = "<span class=\"badge bg-blue\">" . ucfirst($row->process_type) . "</span>";
             } elseif ($row->process_type == "sub") {
                 $row->typeSpan = "<span class=\"badge bg-yellow\">" . ucfirst($row->process_type) . "</span>";
+            } elseif ($row->process_type == "stockist") {
+                $row->typeSpan = "<span class=\"badge bg-gray\">" . ucfirst($row->process_type) . "</span>";
             } else {
                 $row->typeSpan = $row->process_type;
             }

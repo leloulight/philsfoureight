@@ -28,8 +28,11 @@ class RegisterController extends Controller
         return view('pages.register.stockist');
     }
 
-    public function store_member(Request $request) {
+    public function register_sub() {
+        return view('pages.register.sub');
+    }
 
+    public function store_member(Request $request) {
         $errorMessage = $this->registrationValidations->validateRegistrationPost($request->all());
 
         if ($errorMessage->fails()) {
@@ -53,6 +56,135 @@ class RegisterController extends Controller
             // Log::error(DB::getQueryLog());
             return Redirect::to('/');
         }
+    }
+
+    public function store_sub(Request $request) {
+        // $this->registrationQueries->getAllDownlines(10020);
+        $errorMessage = $this->registrationValidations->validateSubPost($request->all());
+
+        if ($errorMessage->fails()) {
+            return Redirect::to('register/sub')->withInput()->withErrors($errorMessage);
+        } else {
+            // // DB::enableQueryLog();
+            $this->insertSub($request);
+            // // Log::error(DB::getQueryLog());
+            return Redirect::to('/');
+        }
+    }
+
+    public function insertSub($post) {
+        $entry_package = (int) $post['entry_package'];
+        
+        $member_id = $this->registrationQueries->getMemberId($post['username']);
+        $placement_id = $this->registrationQueries->getMemberId($post['placement_id']);
+        $sponsor_id = $this->registrationQueries->getMemberId($post['sponsor_id']);
+        $stockist_id = $this->registrationQueries->getStockistId($post['accountno']);
+        $username = $post['username'];
+
+
+        for ($i=0; $i < $entry_package; $i++) { 
+            $update_log_id = array();
+            $money_log_insert = array();
+            array_push($update_log_id, 10000);
+
+            
+            $last_sub_account = $this->registrationQueries->getLastSubAccount($member_id);
+
+            if($last_sub_account[0]->main_id != NULL) {
+                $member_id = $last_sub_account[0]->main_id;
+                $last_sub_account = $this->registrationQueries->getLastSubAccount($member_id);
+            }
+
+            $last_num = 1;
+            $last_sub_account[0]->last_sub_id = ltrim($last_sub_account[0]->last_sub_id, '0');
+           
+            if(is_int(intval($last_sub_account[0]->last_sub_id))) {
+                $last_num = intval($last_sub_account[0]->last_sub_id);
+                $last_num += 1;
+            }
+
+            $inactive_id = NULL;
+            $isActive = $this->registrationQueries->getMemberStatus($placement_id);
+            if ($isActive == false) {
+                $inactive_id = $placement_id;
+            } else {
+                $inactive_id = $this->registrationQueries->getAllDownlines($placement_id);
+            }
+
+            // $inactive_id = $this->registrationQueries->getInactiveSubAccount($placement_id);
+
+            $post['firstname'] = $last_sub_account[0]->firstname . '-' . $this->registrationValidations->setSubId($last_num);
+            
+            $post['middlename'] = $last_sub_account[0]->middlename;
+            $post['lastname'] = $last_sub_account[0]->lastname;
+            $post['suffix'] = $last_sub_account[0]->suffix; //'-R' . $reward_level;
+
+            $post['mobileno'] = NULL;
+            $post['phoneno'] = NULL;
+            $post['birthdate'] = NULL;
+            $post['email'] = NULL;
+            $post['street_address'] = NULL;
+            $post['city'] = NULL;
+            $post['province'] = NULL;
+            $post['gender'] = NULL;
+            $post['username'] = NULL;
+            $post['password'] = NULL;
+            $post['accountno'] = NULL;
+
+            $post['type'] = 'sub';
+            $post['main_id'] = $member_id;
+            $post['upline_id'] = $inactive_id;
+            $post['sponsor_id'] = $sponsor_id;
+            $post['stockist_id'] = $stockist_id;
+
+            // Insert Sub Account
+            $this->registrationQueries->insertMainAccount($post->all());
+            
+            // Get Last Member Id
+            $new_member_id = $this->registrationQueries->getLastMemberId();
+            
+            $upline_id = $inactive_id;
+            // Update Upline Id
+            $binaries = $this->registrationQueries->getMemberBinaries($upline_id);
+            if ($binaries[0]->binary_left == NULL) {
+                $this->registrationQueries->updateMemberBinaryLeft($upline_id, $new_member_id);
+            } else {
+                $this->registrationQueries->updateMemberBinaryRight($upline_id, $new_member_id);
+            }
+
+            // Insert P500 to Admin
+            $money_log_insert = $this->pushMoneyLog(10000, 500, 'registration-credit', 'New member [sub_account] [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+
+            $unilevel_id = $sponsor_id;
+            // Give P50 to Sponsor Id
+            if ($unilevel_id != 10000) {
+                $money_log_insert = $this->pushMoneyLog($unilevel_id, 50, 'referral-credit', 'Direct Referral Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                $money_log_insert = $this->pushMoneyLog(10000, -50, 'referral-debit', 'Direct Referral Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+            }
+
+            $uplineList = $this->registrationQueries->getUplineList($new_member_id);
+
+            // Distribution of unilevel bonus
+            if ($uplineList != NULL) {
+                foreach ($uplineList as $key) {
+                    if ($key != 10000 && $key != 0) {
+                        $money_log_insert = $this->pushMoneyLog($key, 10, 'unilevel-credit', 'Unilevel Registration Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                        $money_log_insert = $this->pushMoneyLog(10000, -10, 'unilevel-debit', 'Unilevel Registration Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                        if (!in_array($key, $update_log_id)) {
+                            array_push($update_log_id, $key);
+                        }
+                    }
+                }
+            }
+            // Bulk Money Log Insert
+            $this->registrationQueries->bulkInsertMoneyLog($money_log_insert);
+
+            // Update Member Money
+            $this->registrationQueries->bulkUpdateMemberMoney($update_log_id);
+        }
+
+        // Reward Program
+        $this->rewardUnityOneProgram();
     }
 
     public function insertStockist($post) {
@@ -258,7 +390,7 @@ class RegisterController extends Controller
         $this->registrationQueries->bulkUpdateMemberMoney($update_log_id);
 
         // Reward Program
-        $this->rewardUnityOneProgram();
+        // $this->rewardUnityOneProgram();
     }
 
     public function rewardUnityOneProgram() {
@@ -340,7 +472,7 @@ class RegisterController extends Controller
                     if (!in_array(10000, $update_log_id)) array_push($update_log_id, 10000);
 
                     for ($i=0; $i < 2; $i++) { 
-                        $this->createSubAccountRewardProgram($active_unity_id, 2);
+                        $this->createSubAccountRewardProgram($active_unity_id);
                     }
 
                     // Reward Program
@@ -397,7 +529,7 @@ class RegisterController extends Controller
                     if (!in_array(10000, $update_log_id)) array_push($update_log_id, 10000);
 
                     for ($i=0; $i < 4; $i++) { 
-                        $this->createSubAccountRewardProgram($active_unity_id, 3);
+                        $this->createSubAccountRewardProgram($active_unity_id);
                     }
 
                     // Reward Program
@@ -454,7 +586,7 @@ class RegisterController extends Controller
                     if (!in_array(10000, $update_log_id)) array_push($update_log_id, 10000);
 
                     for ($i=0; $i < 8; $i++) { 
-                        $this->createSubAccountRewardProgram($active_unity_id, 4);
+                        $this->createSubAccountRewardProgram($active_unity_id);
                     }
 
                     // Reward Program
@@ -511,7 +643,7 @@ class RegisterController extends Controller
                     if (!in_array(10000, $update_log_id)) array_push($update_log_id, 10000);
 
                     for ($i=0; $i < 16; $i++) { 
-                        $this->createSubAccountRewardProgram($active_unity_id, 5);
+                        $this->createSubAccountRewardProgram($active_unity_id);
                     }
 
                     // Reward Program
@@ -536,13 +668,21 @@ class RegisterController extends Controller
         if (count($update_log_id) > 0) $this->registrationQueries->bulkUpdateMemberMoney($update_log_id);
     }
 
-    public function createSubAccountRewardProgram($member_id, $reward_level) {
+    public function createSubAccountRewardProgram($member_id) {
         $post = array();
+
+        $member_id = $member_id;
+        $placement_id = $member_id;
+        $sponsor_id = $member_id;
+        $stockist_id = $this->registrationQueries->getStockistIdByMemberId($member_id);
+        $username = $this->registrationQueries->getMemberUsername($member_id);
+
 
         $update_log_id = array();
         $money_log_insert = array();
         array_push($update_log_id, 10000);
 
+        
         $last_sub_account = $this->registrationQueries->getLastSubAccount($member_id);
 
         if($last_sub_account[0]->main_id != NULL) {
@@ -557,9 +697,9 @@ class RegisterController extends Controller
             $last_num = intval($last_sub_account[0]->last_sub_id);
             $last_num += 1;
         }
-        $username = $this->registrationQueries->getMemberUsername($member_id);
-        $inactive_id = $this->registrationQueries->getInactiveSubAccount($member_id);
 
+        $inactive_id = $this->registrationQueries->getAllDownlines($placement_id);
+        
         $post['firstname'] = $last_sub_account[0]->firstname . '-' . $this->registrationValidations->setSubId($last_num);
         
         $post['middlename'] = $last_sub_account[0]->middlename;
@@ -580,31 +720,49 @@ class RegisterController extends Controller
 
         $post['type'] = 'sub';
         $post['main_id'] = $member_id;
-        $post['sponsor_id'] = $inactive_id;
+        $post['upline_id'] = $inactive_id;
+        $post['sponsor_id'] = $sponsor_id;
+        $post['stockist_id'] = $stockist_id;
 
+        // Insert Sub Account
         $this->registrationQueries->insertMainAccount($post);
-        // Get Unilevel List. Up to 7 Level.
-        $unilevelList = $this->registrationQueries->getUnlivelList($inactive_id);
+        
+        // Get Last Member Id
+        $new_member_id = $this->registrationQueries->getLastMemberId();
+        
+        $upline_id = $inactive_id;
+        // Update Upline Id
+        $binaries = $this->registrationQueries->getMemberBinaries($upline_id);
+        if ($binaries[0]->binary_left == NULL) {
+            $this->registrationQueries->updateMemberBinaryLeft($upline_id, $new_member_id);
+        } else {
+            $this->registrationQueries->updateMemberBinaryRight($upline_id, $new_member_id);
+        }
+
+        // Insert P500 to Admin
+        $money_log_insert = $this->pushMoneyLog(10000, 500, 'registration-credit', 'New member [sub_account] [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+
+        $unilevel_id = $sponsor_id;
+        // Give P50 to Sponsor Id
+        if ($unilevel_id != 10000) {
+            $money_log_insert = $this->pushMoneyLog($unilevel_id, 50, 'referral-credit', 'Direct Referral Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+            $money_log_insert = $this->pushMoneyLog(10000, -50, 'referral-debit', 'Direct Referral Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+        }
+
+        $uplineList = $this->registrationQueries->getUplineList($new_member_id);
+
         // Distribution of unilevel bonus
-        foreach ($unilevelList as $key) {
-            if ($key != 10000 && $key != 0) {
-                $money_log_insert = $this->pushMoneyLog($key, 10, 'unilevel-credit', 'Unilevel Registration Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
-                $money_log_insert = $this->pushMoneyLog(10000, -10, 'unilevel-debit', 'Unilevel Registration Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
-                
-                if (!in_array($key, $update_log_id)) {
-                    array_push($update_log_id, $key);
+        if ($uplineList != NULL) {
+            foreach ($uplineList as $key) {
+                if ($key != 10000 && $key != 0) {
+                    $money_log_insert = $this->pushMoneyLog($key, 10, 'unilevel-credit', 'Unilevel Registration Bonus FROM [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                    $money_log_insert = $this->pushMoneyLog(10000, -10, 'unilevel-debit', 'Unilevel Registration Bonus TO [' . $username . ']-[' . $post['firstname'] . ']', $money_log_insert);
+                    if (!in_array($key, $update_log_id)) {
+                        array_push($update_log_id, $key);
+                    }
                 }
             }
         }
-        
-        // Count UNILEVEL
-        $count_unilevel = intval($this->registrationQueries->countUnilevel($inactive_id));
-
-        // Set Status to ACTIVE if more than 1 or == 2 Unilevel Count
-        if ($count_unilevel > 1 || $count_unilevel == 2) {
-            $this->registrationQueries->updateMemberStatus($inactive_id);
-        }
-
         // Bulk Money Log Insert
         $this->registrationQueries->bulkInsertMoneyLog($money_log_insert);
 

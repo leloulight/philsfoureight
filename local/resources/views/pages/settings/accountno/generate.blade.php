@@ -23,7 +23,7 @@
 <!-- Main content -->
 <section class="content">
   <!-- Your Page Content Here -->
-  {!! Form::open(array('url' => '/settings/accountno/assign', 'method' => 'post')) !!}
+  {!! Form::open(array('url' => '/settings/accountno/generate', 'method' => 'post')) !!}
     <!-- Your Page Content Here -->
     <div class="row">
     <div class="col-md-6">

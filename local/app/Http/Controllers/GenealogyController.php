@@ -25,6 +25,7 @@ class GenealogyController extends Controller
     public function index($id) {
     	if ((int)$id == 0){ return view('pages.404'); }
         $data_one = $this->genealogyQueries->getBinaryInfo($id);
+        $name = $data_one[0]->name;
         if (count($data_one) == 0){ return view('pages.404'); }
         $data_two = NULL;
         $data_three = NULL;
@@ -181,7 +182,7 @@ class GenealogyController extends Controller
             }
         }
 
-        return view('pages.genealogy', compact('data_one', 'data_two', 'data_three', 'data_four', 'data_five', 'data_six', 'data_seven'));
+        return view('pages.genealogy', compact('data_one', 'data_two', 'data_three', 'data_four', 'data_five', 'data_six', 'data_seven', 'name'));
     }
 
     

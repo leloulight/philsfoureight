@@ -138,6 +138,44 @@ class RegistrationValidations {
 		return $validator;
 	}
 
+	public function validateSubPost(array $data){
+		$attributeNames = array(
+			'accountno' => 'Account No.',
+			'username' => 'Username',
+			'placement_id' => 'Placement Id',
+			'sponsor_id' => 'Sponsor Id'
+		);
+
+		// Get Stockist ID
+		$data['stockist_id'] = $this->registrationQueries->getStockistId($data['accountno']);
+
+		$validator = Validator::make($data,[
+			'accountno' => 'required|exists:members,accountno',
+			'username' => 'required|exists:members,username',
+			'placement_id' => 'required|exists:members,username',
+			'sponsor_id' => 'required|exists:members,username'
+		]);
+
+		$validator->setAttributeNames($attributeNames);
+		
+		$validator->after(function ($validator) use ($data) {
+			$this->validateAccountNoUsername($data['accountno'], $data['username'], $validator);
+		});
+
+		$validator->after(function ($validator) use ($data) {
+			$this->validatePlacementId($data['placement_id'], $validator, $data['stockist_id']);
+		});
+
+		return $validator;
+	}
+
+	public function validateAccountNoUsername($accountno, $username, $validator) {
+		$valid = $this->registrationQueries->checkAccountNoUsername($accountno, $username);
+		if ($valid == false) {
+			$validator->errors()->add('accountno', "Account No. and Username doesn't match");
+		}
+	}
+
 	public function validateStockistAccountNo($accountno, $validator) {
 		$result = $this->registrationQueries->validStockistRegAccoutnNo($accountno);
 		if ($result == false) {

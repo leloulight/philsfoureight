@@ -95,7 +95,7 @@ Member - Registration
             <div class="form-group {{ $errors->has('street_address') ? 'has-error' : '' }}">
               {!! Form::label('street_address', 'Street Adress', ['class' => 'col-sm-3 control-label']) !!}
               <div class="col-sm-9">
-                {!! Form::text('street_address', null, ['class' => 'form-control']) !!}
+                {!! Form::text('street_address', null, ['class' => 'form-control', 'style' => 'text-transform:uppercase']) !!}
                 {!! $errors->first('street_address', '<label class="control-label"><i class="fa fa-times-circle-o"></i> :message</label>') !!}
               </div>
             </div>
@@ -235,7 +235,7 @@ Member - Registration
         set_city(24);
         document.getElementById("province").value = 24;
 
-        document.getElementById("accountno").value = randomIntFromInterval(1000000001, 1000001000);
+        document.getElementById("accountno").value = randomIntFromInterval(1000000101, 1000000600);
         var uname_pword = randomUsername();
         document.getElementById("username").value = uname_pword;
         document.getElementById("password").value = uname_pword;

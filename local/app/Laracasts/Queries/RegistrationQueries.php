@@ -1,7 +1,8 @@
 <?php
 namespace Laracasts\Queries;
 use DB;
-class RegistrationQueries{
+
+class RegistrationQueries {
 
 	public function insertMoneyLog($member_id, $amount, $type, $log) {
 		$sql = "INSERT INTO money_log (member_id, amount, type, log) 
@@ -72,21 +73,21 @@ class RegistrationQueries{
 				VALUES(:firstname, :middlename, :lastname, :suffix, :mobileno, :phoneno, :birthdate, :email, :street_address, :city_id, :province_id, :gender, :unilevel_id, :username, :password, :accountno, :guid, :status, :type, :main_id, :stockist_id, :upline_id)";
 		
 		$param = array(
-			":firstname"		=> $post['firstname'],
-			":middlename"		=> $post['middlename'],
-			":lastname"			=> $post['lastname'],
-			":suffix"			=> $post['suffix'],
+			":firstname"		=> $this->stringTrimUpper($post['firstname']),
+			":middlename"		=> $this->stringTrimUpper($post['middlename']),
+			":lastname"			=> $this->stringTrimUpper($post['lastname']),
+			":suffix"			=> $this->stringTrimUpper($post['suffix']),
 			":mobileno"			=> $post['mobileno'],
 			":phoneno"			=> $post['phoneno'],
 			":birthdate"		=> $post['birthdate'],
-			":email"			=> $post['email'],
-			":street_address"	=> $post['street_address'],
+			":email"			=> $this->stringTrimOnly($post['email']),
+			":street_address"	=> $this->stringTrimUpper($post['street_address']),
 			":city_id"			=> $post['city'],
 			":province_id"		=> $post['province'],
 			":gender"			=> $post['gender'],
 			":unilevel_id"		=> $post['sponsor_id'],
-			":username"			=> $post['username'],
-			":password"			=> $post['password'],
+			":username"			=> $this->stringTrimOnly($post['username']),
+			":password"			=> $this->stringTrimOnly($post['password']),
 			":accountno"		=> $post['accountno'],
 			":guid"				=> NULL,
 			":status"			=> 0,
@@ -449,7 +450,12 @@ class RegistrationQueries{
 	}
 
 	public function getMemberUsername($member_id) {
-		$sql = "SELECT username FROM members WHERE id = :id LIMIT 1";
+		$sql = "SELECT  
+				CASE TYPE WHEN 'sub' THEN (SELECT username FROM members WHERE id = A.main_id)
+				ELSE username
+				END AS username
+				FROM members A
+				WHERE id = :id LIMIT 1";
 		$param = array(
 			":id" => $member_id
 		);
@@ -592,4 +598,103 @@ class RegistrationQueries{
 		);
 		$result = DB::update($sql, $param);
 	}
+
+	public function stringTrimUpper($string) {
+    	$string = strtoupper($string);
+    	$string = rtrim($string);
+    	$string = ltrim($string);
+    	return $string;
+    }
+
+    public function stringTrimOnly($string) {
+    	$string = rtrim($string);
+    	$string = ltrim($string);
+    	return $string;
+    }
+
+    public function getAllDownlines($id) {
+    	$downlines = array();
+    	$sql = "SELECT id, firstname, lastname, upline_id, status, type FROM members WHERE upline_id = " . $id;
+    	$bool = true;
+    	$count = 0;
+    	while ($bool) {
+    		$result = DB::select($sql);
+    		
+    		foreach ($result as $key) {
+	    		$downlines[$count]['id'] = $key->id;
+	    		$downlines[$count]['firstname'] = $key->firstname;
+	    		$downlines[$count]['lastname'] = $key->lastname;
+	    		$downlines[$count]['upline_id'] = $key->upline_id;
+	    		$downlines[$count]['status'] = $key->status;
+	    		$count += 1;
+	    	}
+
+    		if (count($result) == 0) { $bool = false; }
+	    	
+	    	$sql = "SELECT id, firstname, lastname, upline_id, status, type FROM members ";
+	    	for ($i=0; $i < count($result); $i++) { 
+	    		if ($i==0) { 
+	    			$sql .= "WHERE upline_id = " .$result[$i]->id . " ";
+	    		} else {
+	    			$sql .= "OR upline_id = " .$result[$i]->id . " ";
+	    		}
+	    	}
+    	}
+
+    	$inactive_id = NULL;
+    	foreach ($downlines as $key) {
+    		if ($key['status'] == 0) {
+				$inactive_id = $key['id'];
+				break;
+			}
+    	}
+
+    	return $inactive_id;
+    }
+
+    public function checkAccountNoUsername($accountno, $username) {
+    	$sql = "SELECT id FROM members WHERE accountno = :accountno AND username = :username";
+    	$param = array(
+    		":accountno" => $accountno,
+    		":username" => $username
+    	);
+    	$result = DB::select($sql, $param);
+    	if (count($result) == 0) {
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
+
+    public function getMemberStatus($id) {
+    	$sql = "SELECT status FROM members WHERE id = :id LIMIT 1";
+    	$param = array(
+    		":id" => $id
+    	);
+
+    	$result = DB::select($sql, $param);
+    	if ($result[0]->status == 0) {
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
+
+    public function getStockistIdByMemberId($id) {
+    	$sql = "SELECT stockist_id FROM members WHERE id = :id";
+    	$param = array(
+    		":id" => $id
+    	);
+    	$result = DB::select($sql, $param);
+    	return $result[0]->stockist_id;
+    }
+
+    public function getStockistCard() {
+    	$sql = "SELECT accountno FROM account_numbers WHERE stockist_id = 10001 AND member_id IS NULL LIMIT 1";
+    	$result = DB::select($sql);
+    	if (count($result) == 0) {
+    		die();
+    	}
+    	return $result[0]->accountno;
+    }
 }

@@ -43,7 +43,9 @@ class SettingsController extends Controller
     }
 
     public function accountno_assign() {
-        return view('pages.settings.accountno.assign');
+        $stockist_list = $this->settingsQueries->getStockistList();
+        $start = $this->settingsQueries->getStartUnusedAccountNo();
+        return view('pages.settings.accountno.assign', compact('stockist_list', 'start'));
     }
 
     public function accountno_generate() {
@@ -53,7 +55,27 @@ class SettingsController extends Controller
     }
 
     public function accountno_assign_store(Request $request) {
+        $errorMessage = $this->settingsValidations->validateAssignAccountNoPost($request->all());
+        
+        if ($errorMessage->fails()) {
+            return Redirect::to('settings/accountno/assign')->withInput()->withErrors($errorMessage);
+        } else {
+            $this->assignAccountNo($request);
+            return Redirect::to('/');
+        }
+    }
 
+    public function assignAccountNo($post) {
+        $start = (int)$post['last_accountno'];
+        $no_accounts = (int)$post['no_accounts'];
+
+        $start_accountno_id = $this->settingsQueries->getAccountNoId($start);
+        $last_accountno_id = $start_accountno_id + $no_accounts;
+
+        $this->settingsQueries->assignAccountNoUpdate($start_accountno_id, $last_accountno_id, $post['stockist_list']);
+    }
+
+    public function accountno_generate_store(Request $request) {
         $errorMessage = $this->settingsValidations->validateInsertAccountNoPost($request->all());
         
         if ($errorMessage->fails()) {

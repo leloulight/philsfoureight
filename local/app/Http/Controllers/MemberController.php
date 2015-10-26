@@ -28,6 +28,7 @@ class MemberController extends Controller {
 
         foreach($members as &$row) {
             $row->row_num = $row_num += 1;
+            $row->sub = $this->memberQueries->getSubCount($row->id);
             $row->money = $this->memberValidations->formatMoney($row->money);
             $row->created_at = $this->memberValidations->formatDate($row->created_at);
             $row->badgeStatus = $this->memberValidations->getStatusClass($row->status);

@@ -13,7 +13,11 @@ class MemberQueries{
 				HAVING A.type != 'sub' AND A.type != 'admin'
 				ORDER BY A.id DESC";
 		
-		$result = DB::table('member_list')->paginate(15);
+		$result = DB::table('members')
+					->where('type', '<>', 'admin')
+					->where('type', '<>', 'sub')
+					->orderby('id', 'desc')
+					->paginate(15);
 		return $result;
 	}
 
@@ -51,6 +55,7 @@ class MemberQueries{
 		$result = DB::table('money_log')
 						->where('member_id', '=', $id)
 						->orderBy('created_at', 'desc')
+						->orderBy('id', 'desc')
 						->paginate(15);
 		return $result;
 	}
@@ -82,5 +87,15 @@ class MemberQueries{
 						->where('main_id', '=', $id)
 						->paginate(15);
 		return $result;
+	}
+
+	public function getSubCount($id) {
+		$sql = "SELECT COUNT(id) as sub FROM members WHERE main_id = :id";
+		$param = array(
+			":id" => $id
+		);
+
+		$result = DB::select($sql, $param);
+		return $result[0]->sub;
 	}
 }

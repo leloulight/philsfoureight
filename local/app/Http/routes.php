@@ -42,6 +42,7 @@ Route::get('settings/accountno/generate','SettingsController@accountno_generate'
 Route::get('settings/accountno/summary/{id?}', 'SettingsController@accountno_summary');
 // SETTINGS ACCOUNTNO : POST
 Route::post('settings/accountno/assign', 'SettingsController@accountno_assign_store');
+Route::post('settings/accountno/generate', 'SettingsController@accountno_generate_store');
 // API
 Route::get('api/city/{prov_id?}', 'ApiController@getCityJson');
 Route::get('api/province', 'ApiController@getProvinceJson');
@@ -49,3 +50,5 @@ Route::get('api/bargraph', 'ApiController@getDashboardBarGraph');
 Route::get('api/reward/member/{level}/{id}', 'ApiController@getRewardMemberJson');
 // GENEALOGY
 Route::get('genealogy/{id}','GenealogyController@index');
+// TRANSACTION
+Route::get('transaction','TransactionController@index');

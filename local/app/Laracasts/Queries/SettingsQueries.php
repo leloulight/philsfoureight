@@ -69,4 +69,30 @@ class SettingsQueries{
 					->paginate(15);
 		return $result; 
 	}
+
+	public function getStartUnusedAccountNo() {
+		$sql = "SELECT accountno FROM account_numbers WHERE stockist_id IS NULL ORDER BY ID LIMIT 1";
+		$result = DB::select($sql);
+		return $result[0]->accountno;
+	}
+
+	public function getAccountNoId($accountno) {
+		$sql = "SELECT id FROM account_numbers WHERE accountno = :accountno LIMIT 1";
+		$param = array(
+			":accountno" => $accountno
+		);
+
+		$result = DB::select($sql, $param);
+		return $result[0]->id;
+	}
+
+	public function assignAccountNoUpdate($start, $last, $stockist_id) {
+		$sql = "UPDATE account_numbers SET stockist_id = :stockist_id WHERE id >= :start AND id < :last";
+		$param = array(
+			":stockist_id" => $stockist_id,
+			":start" => $start,
+			":last" => $last
+		);
+		$result = DB::update($sql, $param);
+	}
 }

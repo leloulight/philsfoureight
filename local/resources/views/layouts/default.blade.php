@@ -126,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
             
-            <!-- <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li> -->
+            <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li>
             
             <li class="treeview {{strpos(Request::path(),'reward') !== false ? 'active' : ''}}">
               <a href="::javascript()">

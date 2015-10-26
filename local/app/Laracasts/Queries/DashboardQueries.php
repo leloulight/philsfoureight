@@ -35,9 +35,19 @@ class DashboardQueries{
 	}
 
 	public function getTopEarner() {
+		// $sql = "SELECT A.id, CONCAT(A.firstname, ' ', A.middlename, ' ',A.lastname, ' ', IFNULL(A.suffix, '')) AS name, 
+		// 		B.name AS city, C.name AS province, 
+		// 		(SELECT SUM(money) FROM members WHERE id = A.id OR main_id = A.id) AS money
+		// 		FROM members A 
+		// 		INNER JOIN city B
+		// 		ON A.city_id = B.id
+		// 		INNER JOIN province C
+		// 		ON A.province_id = C.id
+		// 		WHERE A.type != 'admin' 
+		// 		AND A.type != 'sub'
+		// 		ORDER BY money DESC LIMIT 5";
 		$sql = "SELECT A.id, CONCAT(A.firstname, ' ', A.middlename, ' ',A.lastname, ' ', IFNULL(A.suffix, '')) AS name, 
-				B.name AS city, C.name AS province, 
-				(SELECT SUM(money) FROM members WHERE id = A.id OR main_id = A.id) AS money
+				B.name AS city, C.name AS province, money
 				FROM members A 
 				INNER JOIN city B
 				ON A.city_id = B.id
@@ -45,8 +55,25 @@ class DashboardQueries{
 				ON A.province_id = C.id
 				WHERE A.type != 'admin' 
 				AND A.type != 'sub'
-				ORDER BY money DESC LIMIT 5";
+				ORDER BY money DESC";
 		$result = DB::select($sql);
+
+		$sql = "SELECT main_id, SUM(money) AS money FROM members
+				WHERE TYPE = 'sub'
+				GROUP BY main_id";
+				
+		$sub_result = DB::select($sql);
+		foreach ($result as $row) {
+			foreach ($sub_result as $row_sub) {
+				if ($row->id == $row_sub->main_id){
+					$row->money = intval($row->money) + intval($row_sub->money);
+				}
+			}
+		}
+
+		ksort($result);
+		$result = array_slice($result, 0, 5);
+
 		return $result;
 	}
 

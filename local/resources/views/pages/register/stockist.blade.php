@@ -95,7 +95,7 @@ Stockist - Registration
             <div class="form-group {{ $errors->has('street_address') ? 'has-error' : '' }}">
               {!! Form::label('street_address', 'Address', ['class' => 'col-sm-3 control-label']) !!}
               <div class="col-sm-9">
-                {!! Form::text('street_address', null, ['class' => 'form-control']) !!}
+                {!! Form::text('street_address', null, ['class' => 'form-control', 'style' => 'text-transform:uppercase']) !!}
                 {!! $errors->first('street_address', '<label class="control-label"><i class="fa fa-times-circle-o"></i> :message</label>') !!}
               </div>
             </div>

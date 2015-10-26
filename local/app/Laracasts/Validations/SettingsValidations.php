@@ -15,15 +15,26 @@ class SettingsValidations{
 		$attributeNames = array(
 		   	'no_accounts' => 'No. of Accounts'
 		);
-
 		$validator = Validator::make($data,[
 			'no_accounts' => 'integer|required'
 		]);
-		
 		$validator->setAttributeNames($attributeNames);
 
 		return $validator;
 	}
+
+	public function validateAssignAccountNoPost(array $data){
+		$attributeNames = array(
+		   	'no_accounts' => 'No. of Accounts'
+		);
+		$validator = Validator::make($data,[
+			'no_accounts' => 'integer|required'
+		]);
+		$validator->setAttributeNames($attributeNames);
+
+		return $validator;
+	}
+
 
  	public function formatDate($date) {
  		if ($date == "0000-00-00 00:00:00") { return NULL;}
