@@ -15,46 +15,42 @@ class DashboardController extends Controller
     private $dashboardValidations;
 
     public function __construct() {
+        $this->middleware('auth');
         $this->dashboardQueries = new dashboardQueries;
         $this->dashboardValidations = new dashboardValidations;
     }
 
     public function index()
     {
+        // $geo = $this->get_lonlat("Lakadun, MASIU, LANAO DEL SUR, PHILIPPINES");
+        // dd($geo);
+        
+        return view('pages.dashboard');
+    }
 
-    	$widget = $this->dashboardQueries->getDashboardInfo();
+    public function get_lonlat(  $addr  ) {
+        try {
+                $coordinates = @file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($addr) . '&sensor=true');
+                $e=json_decode($coordinates);
+                // call to google api failed so has ZERO_RESULTS -- i.e. rubbish address...
+                if ( isset($e->status)) { if ( $e->status == 'ZERO_RESULTS' ) {echo '1:'; $err_res=true; } else {echo '2:'; $err_res=false; } } else { echo '3:'; $err_res=false; }
+                // $coordinates is false if file_get_contents has failed so create a blank array with Longitude/Latitude.
+                if ( $coordinates == false   ||  $err_res ==  true  ) {
+                    $a = array( 'lat'=>0,'lng'=>0);
+                    $coordinates  = new stdClass();
+                    foreach (  $a  as $key => $value)
+                    {
+                        $coordinates->$key = $value;
+                    }
+                } else {
+                    // call to google ok so just return longitude/latitude.
+                    $coordinates = $e;
+                    $coordinates  =  $coordinates->results[0]->geometry->location;
+                }
 
-    	$admin_money = explode('.', $widget[0]->admin_money); 
-		$widget[0]->admin_money = $this->dashboardValidations->formatMoney($widget[0]->admin_money);
-    	$widget[0]->admin_money_dec = substr($admin_money[1], 0, 2);
-
-    	$member_money = explode('.', $widget[0]->member_money); 
-		$widget[0]->member_money = $this->dashboardValidations->formatMoney($widget[0]->member_money);
-		$widget[0]->member_money_dec = substr($member_money[1], 0, 2);
-
-		$widget[0]->new_registration = $this->dashboardValidations->formatMoney($widget[0]->new_registration);
-		$widget[0]->reward_complete = $this->dashboardValidations->formatMoney($widget[0]->reward_complete);
-
-		$today = $this->dashboardQueries->getDate();
-
-		$latest_member = $this->dashboardQueries->latestMember();
-		foreach ($latest_member as $row) {
-			$row->name = ucwords(strtolower($row->name));
-			$row->created_at = $this->dashboardValidations->formatDate($row->created_at, $today);
-		}
-
-        $top_earner = $this->dashboardQueries->getTopEarner();
-        foreach ($top_earner as $row) {
-            $row->name = ucwords(strtolower($row->name));
-            $row->money = $this->dashboardValidations->formatMoneyDec($row->money);
+                return $coordinates;
         }
-
-        $reward_list = $this->dashboardQueries->getRewardCompleted();
-        foreach ($reward_list as &$row) {
-            $row->name = ucwords(strtolower($row->name));
-            $row->created_at = $this->dashboardValidations->formatDate($row->created_at, $today);
-            $row->level_status = $this->dashboardValidations->getLevelClass($row->level);
+        catch (Exception $e) {
         }
-        return view('pages.dashboard', compact('widget', 'latest_member', 'top_earner', 'reward_list'));
     }
 }

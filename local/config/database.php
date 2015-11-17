@@ -65,6 +65,19 @@ return [
             //  'port'      => '4040', // Profiler Port
         ],
 
+        'smsserver' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST'),
+            'database'  => 'smsserver',
+            'username'  => 'root',
+            'password'  => '1234',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+            //  'port'      => '4040', // Profiler Port
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),

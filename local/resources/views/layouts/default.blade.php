@@ -19,9 +19,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('dist/css/ionicons.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
-    <link rel="stylesheet" href="{{asset('dist/css/skins/skin-blue.min.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/skins/skin-green.min.css')}}">
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -51,15 +51,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <!-- The user image in the navbar-->
                   <img src="{{asset('dist/img/default-user.png')}}" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">AJ Manaros</span>
+                  <span class="hidden-xs">{{ucfirst(strtolower(Auth::user()->firstname))}} {{ucfirst(strtolower(Auth::user()->lastname))}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
                     <img src="{{asset('dist/img/default-user.png')}}" class="img-circle" alt="User Image">
                     <p>
-                      AJ Manaros - Web Developer
-                      <small>Member since Oct. 2015</small>
+                      {{ucfirst(strtolower(Auth::user()->firstname))}} {{ucfirst(strtolower(Auth::user()->lastname))}}
+                      <small>Member since {{date_format(Auth::user()->created_at, "M d Y")}}</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -101,7 +101,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <img src="{{asset('dist/img/default-user.png')}}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>AJ Manaros</p>
+              <p>{{ucfirst(strtolower(Auth::user()->firstname))}} {{ucfirst(strtolower(Auth::user()->lastname))}}</p>
               <!-- Status -->
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -111,67 +111,157 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="{{Request::path() == '/' ? 'active' : ''}}"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="{{strpos(Request::path(),'member') !== false ? 'active' : ''}}"><a href="/member"><i class="fa fa-users"></i> <span>Member List</span></a></li>
-            
+            <li class="{{Request::path() == 'dashboard' ? 'active' : ''}}"><a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
               <a href="::javascript()">
-              <i class="fa fa-user-plus"></i> <span>Register Member</span>
+              <i class="fa fa-sitemap"></i> <span>My Network</span>
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'register/member' ? 'active' : ''}}"><a href="/register/member"><i class="fa fa-circle-o"></i> Member</a></li>
-                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> Sub Account</a></li>
-                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href="/register/stockist"><i class="fa fa-circle-o"></i> Stockist</a></li>
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> Network List</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> Genealogy</a></li>
               </ul>
-            </li>
-            
-            <li class="{{Request::path() == 'transaction' ? 'active' : ''}}"><a href="/transaction"><i class="fa fa-archive"></i> <span>Transaction History</span></a></li>
-            
-            <li class="treeview {{strpos(Request::path(),'reward') !== false ? 'active' : ''}}">
+            </li>          
+
+            <li class="treeview {{strpos(Request::path(),'bills') !== false ? 'active' : ''}}">
               <a href="::javascript()">
-              <i class="fa fa-money"></i> <span>Reward Program</span>
+              <i class="fa fa-money"></i> <span>Bills Payment</span>
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'reward' ? 'active' : ''}}"><a href="/reward"><i class="fa fa-circle-o"></i> Summary</a></li>
-                <li class="{{strpos(Request::path(),'reward/pending') !== false ? 'active' : ''}}">
-                  <a href="#"><i class="fa fa-circle-o"></i> Pending <i class="fa fa-angle-left pull-right"></i></a>
-                  <ul class="treeview-menu" style="{{strpos(Request::path(),'reward/pending') !== false ? 'display: block;' : ''}}">
-                    <li class="{{strpos(Request::path(),'reward/pending/1') !== false ? 'active' : ''}}"><a href="/reward/pending/1"><i class="fa fa-circle-o"></i> Level One</a></li>
-                    <li class="{{strpos(Request::path(),'reward/pending/2') !== false ? 'active' : ''}}"><a href="/reward/pending/2"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="{{strpos(Request::path(),'reward/pending/3') !== false ? 'active' : ''}}"><a href="/reward/pending/3"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li class="{{strpos(Request::path(),'reward/pending/4') !== false ? 'active' : ''}}"><a href="/reward/pending/4"><i class="fa fa-circle-o"></i> Level Four</a></li>
-                    <li class="{{strpos(Request::path(),'reward/pending/5') !== false ? 'active' : ''}}"><a href="/reward/pending/5"><i class="fa fa-circle-o"></i> Level Five</a></li>
+              <li class="{{strpos(Request::path(),'bills/1') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Telecoms <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/1') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/1/1') !== false ? 'active' : ''}}"><a href="/bills/1/1"><i class="fa fa-circle-o"></i> Globe Postpaid Plans</a></li>
+                    <li class="{{strpos(Request::path(),'bills/1/2') !== false ? 'active' : ''}}"><a href="/bills/1/2"><i class="fa fa-circle-o"></i> Globelines</a></li>
                   </ul>
                 </li>
-                <li class="{{strpos(Request::path(),'reward/completed') !== false ? 'active' : ''}}">
-                  <a href="#"><i class="fa fa-circle-o"></i> Completed <i class="fa fa-angle-left pull-right"></i></a>
-                  <ul class="treeview-menu" style="{{strpos(Request::path(),'reward/completed') !== false ? 'display: block;' : ''}}">
-                    <li class="{{strpos(Request::path(),'reward/completed/1') !== false ? 'active' : ''}}"><a href="/reward/completed/1"><i class="fa fa-circle-o"></i> Level One</a></li>
-                    <li class="{{strpos(Request::path(),'reward/completed/2') !== false ? 'active' : ''}}"><a href="/reward/completed/2"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="{{strpos(Request::path(),'reward/completed/3') !== false ? 'active' : ''}}"><a href="/reward/completed/3"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li class="{{strpos(Request::path(),'reward/completed/4') !== false ? 'active' : ''}}"><a href="/reward/completed/4"><i class="fa fa-circle-o"></i> Level Four</a></li>
-                    <li class="{{strpos(Request::path(),'reward/completed/5') !== false ? 'active' : ''}}"><a href="/reward/completed/5"><i class="fa fa-circle-o"></i> Level Five</a></li>
+                <li class="{{strpos(Request::path(),'bills/2') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Utilities <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/2') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/2/3') !== false ? 'active' : ''}}"><a href="/bills/2/3"><i class="fa fa-circle-o"></i> Maynilad Water</a></li>
+                    <li class="{{strpos(Request::path(),'bills/2/4') !== false ? 'active' : ''}}"><a href="/bills/2/4"><i class="fa fa-circle-o"></i> My Destiny</a></li>
+                    <li class="{{strpos(Request::path(),'bills/2/5') !== false ? 'active' : ''}}"><a href="/bills/2/5"><i class="fa fa-circle-o"></i> SkyCable</a></li>
+                    <li class="{{strpos(Request::path(),'bills/2/6') !== false ? 'active' : ''}}"><a href="/bills/2/6"><i class="fa fa-circle-o"></i> SkyCable Zpdee</a></li>
+                    <li class="{{strpos(Request::path(),'bills/2/7') !== false ? 'active' : ''}}"><a href="/bills/2/7"><i class="fa fa-circle-o"></i> South Cotabato II <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Electric Cooperative, Inc.</a></li>
+                    <li class="{{strpos(Request::path(),'bills/2/8') !== false ? 'active' : ''}}"><a href="/bills/2/8"><i class="fa fa-circle-o"></i> Subic Water</a></li>
+                    <li class="{{strpos(Request::path(),'bills/2/9') !== false ? 'active' : ''}}"><a href="/bills/2/9"><i class="fa fa-circle-o"></i> Visayan Electric Co., Inc.</a></li>
+                  </ul>
+                </li>
+                <li class="{{strpos(Request::path(),'bills/3') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Loans <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/3') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/3/10') !== false ? 'active' : ''}}"><a href="/bills/3/10"><i class="fa fa-circle-o"></i> Chinatrust Salary Stretch</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/11') !== false ? 'active' : ''}}"><a href="/bills/3/11"><i class="fa fa-circle-o"></i> Citibank Savings</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/12') !== false ? 'active' : ''}}"><a href="/bills/3/12"><i class="fa fa-circle-o"></i> Citifinancial</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/13') !== false ? 'active' : ''}}"><a href="/bills/3/13"><i class="fa fa-circle-o"></i> City State Bank Loan</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/14') !== false ? 'active' : ''}}"><a href="/bills/3/14"><i class="fa fa-circle-o"></i> Equicom Savings</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/15') !== false ? 'active' : ''}}"><a href="/bills/3/15"><i class="fa fa-circle-o"></i> HSBC Loan</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/16') !== false ? 'active' : ''}}"><a href="/bills/3/16"><i class="fa fa-circle-o"></i> PSBank</a></li>
+                    <li class="{{strpos(Request::path(),'bills/3/17') !== false ? 'active' : ''}}"><a href="/bills/3/17"><i class="fa fa-circle-o"></i> Standard Chartered <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EX Loan</a></li>
+                  </ul>
+                </li>
+                <li class="{{strpos(Request::path(),'bills/4') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Insurances <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/4') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/4/18') !== false ? 'active' : ''}}"><a href="/bills/4/18"><i class="fa fa-circle-o"></i> Ayala Life</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/19') !== false ? 'active' : ''}}"><a href="/bills/4/19"><i class="fa fa-circle-o"></i> AXA Life</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/20') !== false ? 'active' : ''}}"><a href="/bills/4/20"><i class="fa fa-circle-o"></i> Cocolife</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/21') !== false ? 'active' : ''}}"><a href="/bills/4/21"><i class="fa fa-circle-o"></i> Danvil Plans/Berkley <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; International Plans</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/22') !== false ? 'active' : ''}}"><a href="/bills/4/22"><i class="fa fa-circle-o"></i> Great Financial</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/23') !== false ? 'active' : ''}}"><a href="/bills/4/23"><i class="fa fa-circle-o"></i> Fortune Care</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/24') !== false ? 'active' : ''}}"><a href="/bills/4/24"><i class="fa fa-circle-o"></i> Fortune Life</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/25') !== false ? 'active' : ''}}"><a href="/bills/4/25"><i class="fa fa-circle-o"></i> Manulife</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/26') !== false ? 'active' : ''}}"><a href="/bills/4/26"><i class="fa fa-circle-o"></i> Paramount Life</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/27') !== false ? 'active' : ''}}"><a href="/bills/4/27"><i class="fa fa-circle-o"></i> Pioneer Life</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/28') !== false ? 'active' : ''}}"><a href="/bills/4/28"><i class="fa fa-circle-o"></i> PNB Life</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/29') !== false ? 'active' : ''}}"><a href="/bills/4/29"><i class="fa fa-circle-o"></i> Philamlife</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/30') !== false ? 'active' : ''}}"><a href="/bills/4/30"><i class="fa fa-circle-o"></i> Pru Life U.K.</a></li>
+                    <li class="{{strpos(Request::path(),'bills/4/31') !== false ? 'active' : ''}}"><a href="/bills/4/31"><i class="fa fa-circle-o"></i> Sun Life of Canada <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Phils.), Inc.</a></li>
+                  </ul>
+                </li>
+                <li class="{{strpos(Request::path(),'bills/5') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Credit Card <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/5') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/5/32') !== false ? 'active' : ''}}"><a href="/bills/5/32"><i class="fa fa-circle-o"></i> Allied Bank</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/33') !== false ? 'active' : ''}}"><a href="/bills/5/33"><i class="fa fa-circle-o"></i> Bankard</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/34') !== false ? 'active' : ''}}"><a href="/bills/5/34"><i class="fa fa-circle-o"></i> BDO</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/35') !== false ? 'active' : ''}}"><a href="/bills/5/35"><i class="fa fa-circle-o"></i> Citibank</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/36') !== false ? 'active' : ''}}"><a href="/bills/5/36"><i class="fa fa-circle-o"></i> EastWest Bank</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/37') !== false ? 'active' : ''}}"><a href="/bills/5/37"><i class="fa fa-circle-o"></i> HSBC</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/38') !== false ? 'active' : ''}}"><a href="/bills/5/38"><i class="fa fa-circle-o"></i> Metrobank / PSBank</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/39') !== false ? 'active' : ''}}"><a href="/bills/5/39"><i class="fa fa-circle-o"></i> PNB</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/40') !== false ? 'active' : ''}}"><a href="/bills/5/40"><i class="fa fa-circle-o"></i> Security Bank Diners</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/41') !== false ? 'active' : ''}}"><a href="/bills/5/41"><i class="fa fa-circle-o"></i> Security Bank Mastercard</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/42') !== false ? 'active' : ''}}"><a href="/bills/5/42"><i class="fa fa-circle-o"></i> Standard Chartered</a></li>
+                    <li class="{{strpos(Request::path(),'bills/5/43') !== false ? 'active' : ''}}"><a href="/bills/5/43"><i class="fa fa-circle-o"></i> Union Bank</a></li>
+                  </ul>
+                </li>
+                <li class="{{strpos(Request::path(),'bills/6') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Others <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/6') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/6/44') !== false ? 'active' : ''}}"><a href="/bills/6/44"><i class="fa fa-circle-o"></i> Church of Jesus <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Christ of LDS</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/45') !== false ? 'active' : ''}}"><a href="/bills/6/45"><i class="fa fa-circle-o"></i> Convoy</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/46') !== false ? 'active' : ''}}"><a href="/bills/6/46"><i class="fa fa-circle-o"></i> DTI</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/47') !== false ? 'active' : ''}}"><a href="/bills/6/47"><i class="fa fa-circle-o"></i> Easy Trip</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/48') !== false ? 'active' : ''}}"><a href="/bills/6/48"><i class="fa fa-circle-o"></i> E-Pass</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/49') !== false ? 'active' : ''}}"><a href="/bills/6/49"><i class="fa fa-circle-o"></i> GT Parking</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/50') !== false ? 'active' : ''}}"><a href="/bills/6/50"><i class="fa fa-circle-o"></i> IC Parking</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/51') !== false ? 'active' : ''}}"><a href="/bills/6/51"><i class="fa fa-circle-o"></i> Jet Star Airlines</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/52') !== false ? 'active' : ''}}"><a href="/bills/6/52"><i class="fa fa-circle-o"></i> Kikoload</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/53') !== false ? 'active' : ''}}"><a href="/bills/6/53"><i class="fa fa-circle-o"></i> National Quality <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Corporation</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/54') !== false ? 'active' : ''}}"><a href="/bills/6/54"><i class="fa fa-circle-o"></i> NSO Helpline Pluss</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/55') !== false ? 'active' : ''}}"><a href="/bills/6/55"><i class="fa fa-circle-o"></i> SSS</a></li>
+                    <li class="{{strpos(Request::path(),'bills/6/56') !== false ? 'active' : ''}}"><a href="/bills/6/56"><i class="fa fa-circle-o"></i> Sumisho</a></li>
+                  </ul>
+                </li>
+                <li class="{{strpos(Request::path(),'bills/7') !== false ? 'active' : ''}}">
+                  <a href="#"><i class="fa fa-circle-o"></i> Schools <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="{{strpos(Request::path(),'bills/7') !== false ? 'display: block;' : ''}}">
+                    <li class="{{strpos(Request::path(),'bills/7/57') !== false ? 'active' : ''}}"><a href="/bills/7/57"><i class="fa fa-circle-o"></i> UP</a></li>
+                    <li class="{{strpos(Request::path(),'bills/7/58') !== false ? 'active' : ''}}"><a href="/bills/7/58"><i class="fa fa-circle-o"></i> La Salle</a></li>
+                    <li class="{{strpos(Request::path(),'bills/7/59') !== false ? 'active' : ''}}"><a href="/bills/7/59"><i class="fa fa-circle-o"></i> Miriam College</a></li>
+                    <li class="{{strpos(Request::path(),'bills/7/60') !== false ? 'active' : ''}}"><a href="/bills/7/60"><i class="fa fa-circle-o"></i> UST</a></li>
+                    <li class="{{strpos(Request::path(),'bills/7/61') !== false ? 'active' : ''}}"><a href="/bills/7/61"><i class="fa fa-circle-o"></i> San Beda</a></li>
+                    <li class="{{strpos(Request::path(),'bills/7/62') !== false ? 'active' : ''}}"><a href="/bills/7/62"><i class="fa fa-circle-o"></i> San Sebastian</a></li>
                   </ul>
                 </li>
               </ul>
             </li>
 
-            <li class="treeview {{strpos(Request::path(),'settings') !== false ? 'active' : ''}}">
+            <li class="{{Request::path() == 'remittance' ? 'active' : ''}}"><a href="/remittance"><i class="fa fa-send"></i> <span>Remittance Service</span></a></li>
+
+            <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
               <a href="::javascript()">
-              <i class="fa fa-gears"></i> <span>Settings</span>
+              <i class="fa fa-history"></i> <span>History</span>
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{strpos(Request::path(),'settings/accountno') !== false ? 'active' : ''}}">
-                  <a href="#"><i class="fa fa-circle-o"></i> Account No. <i class="fa fa-angle-left pull-right"></i></a>
-                  <ul class="treeview-menu" style="{{strpos(Request::path(),'settings/accountno') !== false ? 'display: block;' : ''}}">
-                    <li class="{{strpos(Request::path(),'settings/accountno/summary') !== false ? 'active' : ''}}"><a href="/settings/accountno/summary"><i class="fa fa-circle-o"></i> Summary Overview</a></li>
-                    <li class="{{strpos(Request::path(),'settings/accountno/assign') !== false ? 'active' : ''}}"><a href="/settings/accountno/assign"><i class="fa fa-circle-o"></i> Assign Account No.</a></li>
-                    <li class="{{strpos(Request::path(),'settings/accountno/generate') !== false ? 'active' : ''}}"><a href="/settings/accountno/generate"><i class="fa fa-circle-o"></i> Generate New</a></li>
-                  </ul>
-                </li>
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> Commission</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> Encashment</a></li>
+                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href="/register/stockist"><i class="fa fa-circle-o"></i> Bills Payment</a></li>
+                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href="/register/stockist"><i class="fa fa-circle-o"></i> Remittance</a></li>
+              </ul>
+            </li>
+
+            <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
+              <a href="::javascript()">
+              <i class="fa fa-group"></i> <span>Sub Account</span>
+              <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu " style="">
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> Add Sub Account</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> View List</a></li>
+              </ul>
+            </li>
+
+            <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
+              <a href="::javascript()">
+              <i class="fa fa-gear"></i> <span>Profile</span>
+              <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu " style="">
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> View Info</a></li>
               </ul>
             </li>
             <!-- <li class="{{Request::path() == 'unilevel' ? 'active' : ''}}"><a href="/unilevel"><i class="fa fa-sitemap"></i> <span>Unilevel</span></a></li> -->
@@ -199,6 +289,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/app.min.js')}}"></script>
+    <script src="{{asset('dist/js/loader.js')}}"></script>
+    <script type="text/javascript">
+    </script>
     @yield('scripts')
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the

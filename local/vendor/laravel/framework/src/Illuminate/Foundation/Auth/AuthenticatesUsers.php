@@ -5,6 +5,7 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Redirect;
 
 trait AuthenticatesUsers
 {
@@ -15,13 +16,20 @@ trait AuthenticatesUsers
      *
      * @return \Illuminate\Http\Response
      */
+    protected $username = 'username';
+    protected $table = 'members';
+    protected $loginPath = '/';
+    protected $redirectPath = '/dashboard';
+    protected $redirectAfterLogout = '/';
+    protected $redirectIfAuthenticated = '/';
+
     public function getLogin()
     {
         if (view()->exists('auth.authenticate')) {
             return view('auth.authenticate');
         }
 
-        return view('auth.login');
+        return view('pages.login');
     }
 
     /**
@@ -33,7 +41,7 @@ trait AuthenticatesUsers
     public function postLogin(Request $request)
     {
         $this->validate($request, [
-            $this->loginUsername() => 'required', 'password' => 'required',
+            $this->loginUsername() => 'required', 'password' => 'required', 
         ]);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -46,7 +54,13 @@ trait AuthenticatesUsers
         }
 
         $credentials = $this->getCredentials($request);
-
+        // IF member Type = MEMBER
+        $credentials['type'] = 'member';
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+        // IF member Type = STOCKIST
+        $credentials['type'] = 'stockist';
         if (Auth::attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
         }

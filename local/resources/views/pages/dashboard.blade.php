@@ -4,6 +4,7 @@ Dashboard
 @stop
 @section('styles')
 @stop
+
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -19,246 +20,88 @@ Dashboard
 <!-- Main content -->
 <section class="content">
   <!-- Your Page Content Here -->
-  <div class="row">
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-aqua">
-        <div class="inner">
-          <h3>
-            <!-- ₱ --> {!! $widget[0]->admin_money !!}<span style="font-size: 20px;">.{!! $widget[0]->admin_money_dec !!}</span>
-          </h3>
-          <p>Company's Income</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-android-globe"></i>
-        </div>
-        <div class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></div>
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-yellow">
-        <div class="inner">
-          <h3>{!! $widget[0]->new_registration !!}</h3>
-          <p>New Registrations</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-person-add"></i>
-        </div>
-        <div class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></div>
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>
-            <!-- ₱ --> {!! $widget[0]->member_money !!}<span style="font-size: 20px;">.{!! $widget[0]->member_money_dec !!}</span>
-          </h3>
-          <p>Member's Income</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-stats-bars"></i>
-        </div>
-        <div class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></div>
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-red">
-        <div class="inner">
-          <h3>{!! $widget[0]->reward_complete !!}</h3>
-          <p>Reward Program Completed</p>
-        </div>
-        <div class="icon">
-          <i class="ion-android-contact"></i>
-        </div>
-        <div class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></div>
-      </div>
-    </div>
-    <!-- ./col -->
-  </div>
-  <!-- /.row -->
-  <div class="row">
-    <div class="col-md-8">
-      <!-- BAR CHART -->
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Bar Chart</h3>
-        </div>
-        <div class="box-body">
-          <div class="chart">
-            <canvas id="barChart" style="height:230px"></canvas>
-          </div>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-    </div>
-    <!-- /.col (RIGHT) -->
-    <div class="col-md-4">
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <h3 class="box-title">Latest Members</h3>
-          <div class="box-tools pull-right">
-            <span class="label label-danger">{!! $widget[0]->new_registration !!} New Member(s)</span>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
-          <ul class="users-list clearfix">
-            @foreach($latest_member as $member)
-            <li>
-              <img src="dist/img/default-user.png" alt="User Image">
-              <a class="users-list-name" href="member/{{$member->id}}">{{$member->name}}</a>
-              <span class="users-list-date">{{$member->created_at}}</span>
-            </li>
-            @endforeach
-          </ul>
-          <!-- /.users-list -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer text-center">
-          <a href="member" class="uppercase">View All Users</a>
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!--/.box -->
-    </div>
-  </div>
-  <!-- /.row -->
-  <div class="row">
-    <div class="col-md-8">
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Completed Reward Program</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table no-margin">
-              <thead>
-                <tr>
-                  <th>Acc No.</th>
-                  <th>Name</th>
-                  <th>Level</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                @if (count($reward_list) == 0)
-                  <tr><td colspan="4">No data was returned.</td></tr>
-                @else
-                  @foreach($reward_list as $member)
-                  <tr>
-                    <td><a href="">{{$member->accountno}}</a></td>
-                    <td>{{$member->name}}</td>
-                    <td><span class="label {{$member->level_status}}">Level {{$member->level}}</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">{{$member->created_at}}</div>
-                    </td>
-                  </tr>
-                  @endforeach
-                @endif
-              </tbody>
-            </table>
-          </div>
-          <!-- /.table-responsive -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <a href="/reward" class="btn btn-sm btn-default btn-flat pull-right">View All</a>
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!-- /.box -->
-    </div>
-    <div class="col-md-4">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Top Earners</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <ul class="products-list product-list-in-box">
-            @if(count($top_earner) == 0)
-              <li class="item">
-                No data was returned.
-              </li>
-            @else
-              @foreach($top_earner as $member)
-              <li class="item">
-                <div class="product-img">
-                  <img src="dist/img/default-user.png" alt="User Image">
-                </div>
-                <div class="product-info">
-                  <a href="member/{{$member->id}}" class="product-title">{{$member->name}} <button class="btn btn-primary btn-sm pull-right"><b>₱ {{$member->money}}</b></button></a>
-                  <span class="product-description">
-                  {{$member->city}}, {{$member->province}}
-                  </span>
-                </div>
-              </li>
-            @endforeach
-            @endif
-            <!-- /.item -->
-          </ul>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-    </div>
-  </div>
+<button onclick="myFunction()">Click me</button>
+<div id="googleMap" style="width:500px;height:380px;"></div>
 </section>
 <!-- /.content -->
 @stop
 @section('scripts')
-<script src="plugins/chartjs/Chart.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
 <script>
-  $(function () {
-    $.getJSON('api/bargraph', function(barChartData) {
-        //-------------
-        //- BAR CHART -
-        //-------------
-        var barChartCanvas = $("#barChart").get(0).getContext("2d");
-        var barChart = new Chart(barChartCanvas);
-        
-        barChartData.datasets[1].fillColor = "#00a65a";
-        barChartData.datasets[1].strokeColor = "#00a65a";
-        barChartData.datasets[1].pointColor = "#00a65a";
-        var barChartOptions = {
-          //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-          scaleBeginAtZero: true,
-          //Boolean - Whether grid lines are shown across the chart
-          scaleShowGridLines: true,
-          //String - Colour of the grid lines
-          scaleGridLineColor: "rgba(0,0,0,.05)",
-          //Number - Width of the grid lines
-          scaleGridLineWidth: 1,
-          //Boolean - Whether to show horizontal lines (except X axis)
-          scaleShowHorizontalLines: true,
-          //Boolean - Whether to show vertical lines (except Y axis)
-          scaleShowVerticalLines: true,
-          //Boolean - If there is a stroke on each bar
-          barShowStroke: true,
-          //Number - Pixel width of the bar stroke
-          barStrokeWidth: 2,
-          //Number - Spacing between each of the X value sets
-          barValueSpacing: 5,
-          //Number - Spacing between data sets within X values
-          barDatasetSpacing: 1,
-          //String - A legend template
-          legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-          //Boolean - whether to make the chart responsive
-          responsive: true,
-          maintainAspectRatio: true
-        };
-      
-        barChartOptions.datasetFill = false;
-        barChart.Bar(barChartData, barChartOptions);
-    });
-  });
+var lat = 14.2990183;
+var lng = 120.9589699;
+var myCenter=new google.maps.LatLng(lat, lng);
+var mapProp = {
+	  center:myCenter,
+	  zoom:15,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+
+	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+function initialize()
+{
+	
+	for (var i = 0; i < 10; i++) {
+		var new_lat = lat + randomLat();
+		var new_long = lng + randomLong();
+		// alert(new_lat);
+		var myCenter2=new google.maps.LatLng(new_lat, new_long);
+		var marker=new google.maps.Marker({
+		  position:myCenter2,
+		  title:'Click to zoom'
+		  });
+
+		google.maps.event.addListener(marker,'click',function() {
+		  map.setZoom(15);
+		  map.setCenter(marker.getPosition());
+		  });
+		marker.setMap(map);
+	};
+
+	
+// var marker=new google.maps.Marker({
+//   position:myCenter2,
+//   title:'Click to zoom'
+//   });
+// marker.setMap(map);
+
+// google.maps.event.addListener(marker,'click',function() {
+//   map.setZoom(15);
+//   map.setCenter(marker.getPosition());
+//   });
+}
+function randomLat() {
+	var i = parseFloat((Math.random() * (0.005 - 0.000001) + 0.000001).toFixed(6));
+	// alert(i);
+	var i = Math.random() < 0.5 ? i * -1 : i * 1;
+	return i;
+}
+
+function randomLong() {
+	var i = parseFloat((Math.random() * (0.005 - 0.000001) + 0.000001).toFixed(6));
+	// alert(i);
+	var i = Math.random() < 0.5 ? i * -1 : i * 1;
+	return i;
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function myFunction () {
+	var new_lat = lat + randomLat();
+		var new_long = lng + randomLong();
+	var myCenter2=new google.maps.LatLng(new_lat, new_long);
+		var marker=new google.maps.Marker({
+		  position:myCenter2,
+		  animation:google.maps.Animation.BOUNCE,
+		  title:'Click to zoom'
+		  });
+
+		google.maps.event.addListener(marker,'click',function() {
+		  map.setZoom(15);
+		  map.setCenter(marker.getPosition());
+		  });
+		marker.setMap(map);
+}
 </script>
 @stop
