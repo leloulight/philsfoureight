@@ -126,7 +126,7 @@
     <div class="container">
       <div class="fantom-footerlogo col-md-6"><a href="#"><img src="src/images/logobtm.png" alt="PHILSFOUREIGHT Logo" /></a></div>
       <div class="fantom-copyright col-md-6">
-        <p>© 2015 PHILSFOUREIGHT. Powered by <a href="#">DBS Development Group™</a></p>
+        <p>© 2015 PHILSFOUREIGHT.</p>
       </div>
     </div>
   </div>
