@@ -23,7 +23,11 @@ class RemittanceQueries{
 			":id" => $id
 		);
 		$result = DB::select($sql, $param);
-		return $result[0]->name;
+		if (count($result) == 0) {
+			return ' ';
+		} else {
+			return $result[0]->name;
+		}
 	}
 
 	public function getProvinceName($id) {
@@ -32,15 +36,19 @@ class RemittanceQueries{
 			":id" => $id
 		);
 		$result = DB::select($sql, $param);
-		return $result[0]->name;
+		if (count($result) == 0) {
+			return ' ';
+		} else {
+			return $result[0]->name;
+		}
 	}
 
 	public function getReceiverInfo($accountno, $username) {
 		$sql = "SELECT A.*, B.name AS city_name, C.name AS province_name
 				FROM members A
-				INNER JOIN city B
+				LEFT JOIN city B
 				ON A.city_id = B.id
-				INNER JOIN province C
+				LEFT JOIN province C
 				ON A.province_id = C.id
 				WHERE A.accountno = :accountno AND username = :username
 				LIMIT 1";
@@ -53,13 +61,15 @@ class RemittanceQueries{
 	}
 
 	public function insertRemittance($data) {
-		$sql = "INSERT INTO remittance (sender_id, receiver_id, amount, fee, total, note) 
-				VALUES (:sender_id, :receiver_id, :amount, :fee, :total, :note)";
+		$sql = "INSERT INTO remittance (sender_id, receiver_id, amount, fee, total, note, globe_fee, phils_fee) 
+				VALUES (:sender_id, :receiver_id, :amount, :fee, :total, :note, :globe_fee, :phils_fee)";
 		$param = array(
 			":sender_id"	=> $data['sender_id'],
 			":receiver_id"	=> $data['receiver_id'],
 			":amount"		=> $data['amount'],
 			":fee"			=> $data['fee'],
+			":globe_fee"	=> $data['globe_fee'],
+			":phils_fee"	=> $data['phils_fee'],
 			":total"		=> $data['total'],
 			":note"		=> $data['note']
 		);
@@ -90,12 +100,12 @@ class RemittanceQueries{
 	}
 
 	public function insertMessageOut($mobileno, $msg) {
-		$sql = "INSERT INTO messageout (MessageTo, MessageText) VALUES (:mobileno, :msg)";
+		$sql = "INSERT INTO sms_out (mobileno, msg) VALUES (:mobileno, :msg)";
 		$param = array(
 			":mobileno" => $mobileno,
 			":msg" => $msg
 		);
 
-		$result = DB::connection('smsserver')->insert($sql, $param);
+		$result = DB::insert($sql, $param);
 	}
 }

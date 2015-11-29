@@ -11,13 +11,17 @@
 */
 // PAGE NOT FOUND
 Route::get('404', function() { return view('pages.404'); } );
+// WEB
+Route::get('/', function() { return view('pages.index'); });
+Route::get('about', function() { return view('pages.about'); });
+
 // DASHBOARD
 Route::get('dashboard','DashboardController@index');
 // AUTHENTICATION : GET
-Route::get('/', 'Auth\AuthController@getLogin');
-Route::get('/logout', 'Auth\AuthController@getLogout');
+Route::get('login', 'Auth\AuthController@getLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
 // AUTHENTICATION : POST
-Route::post('/', 'Auth\AuthController@postLogin');
+Route::post('login', 'Auth\AuthController@postLogin');
 // API
 Route::get('api/bills_main','ApiController@getBillsMainJson');
 Route::get('api/bills_sub/{id?}','ApiController@getBillsSubJson');

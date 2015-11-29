@@ -23,137 +23,6 @@ Remittance
   <!-- Your Page Content Here -->
   <div class="row">
   
-    <div class="col-md-6">
-      <div class="box box-success">
-        <div class="box-header">
-          <h3 class="box-title">PhilsFourEight Remittance Rates</h3>
-          <div class="box-tools">
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body table-responsive no-padding">
-          <table class="table table-striped">
-            <tr>
-              <th style="background-color:#cceae7"><center>Amount</center></th>
-              <th style="background-color:#cceae7"><center>Fee</center></th>
-              <th style="background-color:#99d5cf"><center>Amount</center></th>
-              <th style="background-color:#99d5cf"><center>Fee</center></th>
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">1 - 50</td>
-              <td style="background-color:#cceae7">2</td>
-              
-              <td style="background-color:#99d5cf">2,301 - 2,500</td>
-              <td style="background-color:#99d5cf">72</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">51 - 100</td>
-              <td style="background-color:#cceae7">3</td>
-              
-              <td style="background-color:#99d5cf">2,501 - 2,800</td>
-              <td style="background-color:#99d5cf">81</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">101 - 200</td>
-              <td style="background-color:#cceae7">6</td>
-              
-              <td style="background-color:#99d5cf">2,801 - 3,000</td>
-              <td style="background-color:#99d5cf">87</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">201 - 300</td>
-              <td style="background-color:#cceae7">9</td>
-              
-              <td style="background-color:#99d5cf">3,001 - 3,500</td>
-              <td style="background-color:#99d5cf">93</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">301 - 400</td>
-              <td style="background-color:#cceae7">12</td>
-              
-              <td style="background-color:#99d5cf">3,501 - 4,000</td>
-              <td style="background-color:#99d5cf">113</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">401 - 500</td>
-              <td style="background-color:#cceae7">15</td>
-              
-              <td style="background-color:#99d5cf">4,001 - 4,500</td>
-              <td style="background-color:#99d5cf">123</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">501 - 600</td>
-              <td style="background-color:#cceae7">18</td>
-              
-              <td style="background-color:#99d5cf">4,501 - 5,000</td>
-              <td style="background-color:#99d5cf">128</td>
-              
-            </tr>
-            <tr align="center">
-              <td style="background-color:#cceae7">601 - 700</td>
-              <td style="background-color:#cceae7">20</td>
-              
-              <td style="background-color:#99d5cf">5,001 - 6,000</td>
-              <td style="background-color:#99d5cf">145</td>
-              
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">701 - 800</td>
-              <td style="background-color:#cceae7">23</td>
-              <td style="background-color:#99d5cf">6,001 - 7,000</td>
-              <td style="background-color:#99d5cf">155</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">801 - 900</td>
-              <td style="background-color:#cceae7">26</td>
-              <td style="background-color:#99d5cf">7,001 - 8,000</td>
-              <td style="background-color:#99d5cf">165</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">901 - 1,000</td>
-              <td style="background-color:#cceae7">29</td>
-              <td style="background-color:#99d5cf">8,001 - 9,500</td>
-              <td style="background-color:#99d5cf">185</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">1,001 - 1,300</td>
-              <td style="background-color:#cceae7">38</td>
-              <td style="background-color:#99d5cf">9,501 - 10,000</td>
-              <td style="background-color:#99d5cf">195</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">1,301 - 1,500</td>
-              <td style="background-color:#cceae7">43</td>
-              <td style="background-color:#99d5cf">10,001 - 14,000</td>
-              <td style="background-color:#99d5cf">210</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">1,501 - 1,800</td>
-              <td style="background-color:#cceae7">52</td>
-              <td style="background-color:#99d5cf">14,001 - 15,000</td>
-              <td style="background-color:#99d5cf">220</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">1,801 - 2,000</td>
-              <td style="background-color:#cceae7">58</td>
-              <td style="background-color:#99d5cf">15,001 - 20,000</td>
-              <td style="background-color:#99d5cf">260</td>
-            </tr>
-            <tr align="center">
-            <td style="background-color:#cceae7">2,001 - 2,300</td>
-              <td style="background-color:#cceae7">67</td>
-              <td style="background-color:#99d5cf">20,001 - 30,000</td>
-              <td style="background-color:#99d5cf">300</td>
-            </tr>
-          </table>
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-  </div>
   <div class="col-md-6">
       <!-- Horizontal Form -->
       <div class="box box-primary">
@@ -189,6 +58,7 @@ Remittance
               <div class="col-sm-9">
                 {!! Form::text('amount', null, ['class' => 'form-control', 'style' => 'text-transform:uppercase']) !!}
                 {!! $errors->first('amount', '<label class="control-label"><i class="fa fa-times-circle-o"></i> :message</label>') !!}
+                {!! $errors->has('sponsor_id') ? '' : '<label class="control-label text-aqua"><i class="fa fa-bell-o"></i> Fee is 2% if amount.</label>' !!}
               </div>
             </div>
             <div class="form-group {{ $errors->has('note') ? 'has-error' : '' }}">

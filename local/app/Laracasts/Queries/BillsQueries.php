@@ -27,6 +27,9 @@ class BillsQueries{
 			":id" => $id
 		);
 		$result = DB::select($sql, $param);
+		if (count($result) == 0) {
+			return NULL;
+		}
 		return $result[0]->name;
 	}
 
@@ -36,6 +39,9 @@ class BillsQueries{
 			":id" => $id
 		);
 		$result = DB::select($sql, $param);
+		if (count($result) == 0) {
+			return NULL;
+		}
 		return $result[0]->name;
 	}
 

@@ -18,10 +18,10 @@ trait AuthenticatesUsers
      */
     protected $username = 'username';
     protected $table = 'members';
-    protected $loginPath = '/';
+    protected $loginPath = '/login';
     protected $redirectPath = '/dashboard';
-    protected $redirectAfterLogout = '/';
-    protected $redirectIfAuthenticated = '/';
+    protected $redirectAfterLogout = '/login';
+    protected $redirectIfAuthenticated = '/login';
 
     public function getLogin()
     {
