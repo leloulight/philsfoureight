@@ -119,7 +119,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
               <ul class="treeview-menu " style="">
                 <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Network List</a></li>
-                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Genealogy</a></li>
+                <li class="{{Request::path() == 'mynetwork/genealogy' ? 'active' : ''}}"><a href="/mynetwork/genealogy/{{Auth::user()->id}}"><i class="fa fa-circle-o"></i> Genealogy</a></li>
               </ul>
             </li>          
 
