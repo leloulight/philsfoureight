@@ -118,8 +118,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> Network List</a></li>
-                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> Genealogy</a></li>
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Network List</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Genealogy</a></li>
               </ul>
             </li>          
 
@@ -237,10 +237,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> Commission</a></li>
-                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> Encashment</a></li>
-                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href="/register/stockist"><i class="fa fa-circle-o"></i> Bills Payment</a></li>
-                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href="/register/stockist"><i class="fa fa-circle-o"></i> Remittance</a></li>
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/history/commission"><i class="fa fa-circle-o"></i> Commission</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Encashment</a></li>
+                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Bills Payment</a></li>
+                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Remittance</a></li>
               </ul>
             </li>
 
@@ -250,8 +250,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> Add Sub Account</a></li>
-                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href="/register/sub"><i class="fa fa-circle-o"></i> View List</a></li>
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Add Sub Account</a></li>
+                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> View List</a></li>
               </ul>
             </li>
 
@@ -261,7 +261,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/register"><i class="fa fa-circle-o"></i> View Info</a></li>
+                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> View Info</a></li>
               </ul>
             </li>
             <!-- <li class="{{Request::path() == 'unilevel' ? 'active' : ''}}"><a href="/unilevel"><i class="fa fa-sitemap"></i> <span>Unilevel</span></a></li> -->

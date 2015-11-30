@@ -35,3 +35,5 @@ Route::get('remittance','RemittanceController@index');
 // REMITTANCE : POST
 Route::post('remittance/invoice','RemittanceController@postInvoice');
 Route::post('remittance/submit','RemittanceController@store');
+// HISTORY
+Route::get('history/commission', 'HistoryController@commission');
