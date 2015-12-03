@@ -6,17 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PHILSFOUREIGHT</title>
 <!-- Bootstrap -->
-<link href="src/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{asset('src/css/bootstrap.min.css')}}" rel="stylesheet">
 <!-- Vante5 Custom Style -->
-<link href="src/css/fantomstyle.css" rel="stylesheet">
+<link href="{{asset('src/css/fantomstyle.css')}}" rel="stylesheet">
 <!-- Animation Style -->
-<link href="src/css/animate.css" rel="stylesheet">
+<link href="{{asset('src/css/animate.css')}}" rel="stylesheet">
 <!-- Layer Slider -->
-<link rel='stylesheet' id='camera-css'  href='src/css/camera.css' type='text/css' media='all'>
+<link rel='stylesheet' id='camera-css' href="{{asset('src/css/camera.css')}}" type='text/css' media='all'>
 <!-- Font -->
-<link href="src/icons/styles.css" rel="stylesheet">
+<link href="{{asset('src/icons/styles.css')}}" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|Fjalla+One' rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" type="image/png" href="src/images/favicon.ico"/>
+<link rel="shortcut icon" type="image/png" href="{{asset('src/images/favicon.ico')}}"/>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -135,7 +135,7 @@
 <script src="src/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <!--Jquery UI-->
-  <script src="src/js/slidetoVid.js"></script>
+<script src="src/js/slidetoVid.js"></script>
 <script src="src/js/jquery-ui-1.10.4.custom.min.js"></script>
 <script src="src/js/bootstrap.min.js"></script>
 <script src="src/js/themefantom_jscustom.js"></script>
