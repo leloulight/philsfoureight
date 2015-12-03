@@ -14,7 +14,7 @@
 <!-- Layer Slider -->
 <link rel='stylesheet' id='camera-css' href="{{asset('src/css/camera.css')}}" type='text/css' media='all'>
 <!-- Font -->
-<link href="{{asset('src/icons/styles.css')}}" rel="stylesheet">
+<link href="{{asset('src/Icons/styles.css')}}" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|Fjalla+One' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" type="image/png" href="{{asset('src/images/favicon.ico')}}"/>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
