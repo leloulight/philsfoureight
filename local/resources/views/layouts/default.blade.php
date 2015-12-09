@@ -113,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="header">MAIN NAVIGATION</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="{{Request::path() == 'dashboard' ? 'active' : ''}}"><a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
+            <li class="treeview {{strpos(Request::path(),'mynetwork') !== false ? 'active' : ''}}">
               <a href="::javascript()">
               <i class="fa fa-sitemap"></i> <span>My Network</span>
               <i class="fa fa-angle-left pull-right"></i>
