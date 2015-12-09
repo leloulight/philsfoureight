@@ -17,6 +17,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/skins/skin-blue.min.css')}}">
+    <link rel="shortcut icon" type="image/png" href="{{asset('src/images/favicon.ico')}}"/>
   </head>
   <body class="hold-transition login-page">
     <div class="login-box">
@@ -25,7 +26,7 @@
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-        <form action="/login" method="post">
+        {!! Form::open(array('url' => '/login', 'method' => 'post', 'onsubmit' => 'submit.disabled = true; return true;')) !!}
           {!! csrf_field() !!}
           @if (count($errors) > 0)
             <div class="alert alert-danger">
@@ -49,10 +50,10 @@
               <input type="checkbox" name="remember"> Remember Me
             </div><!-- /.col -->
             <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+              <button name="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div><!-- /.col -->
           </div>
-        </form>
+        {!! Form::close() !!}
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
     <!-- jQuery 2.1.4 -->

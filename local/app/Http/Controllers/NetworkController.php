@@ -27,7 +27,7 @@ class NetworkController extends Controller
     }
 
     public function genealogy($id) {
-        if ((int)$id == 0){ return view('pages.404'); }
+        if (strlen($id) != 8){ return view('pages.404'); }
         $data_one = $this->networkQueries->getBinaryInfo($id);
         $name = $data_one[0]->name;
         if (count($data_one) == 0){ return view('pages.404'); }
@@ -40,30 +40,30 @@ class NetworkController extends Controller
 
         if (count($data_one) == 1) {
             if ($data_one[0]->binary_left != NULL) {
-                $data_two = $this->networkQueries->getBinaryInfo($data_one[0]->binary_left);
+                $data_two = $this->networkQueries->getBinaryInfo($data_one[0]->binary_left_guid);
             }
             if ($data_one[0]->binary_right != NULL) {
-                $data_three = $this->networkQueries->getBinaryInfo($data_one[0]->binary_right);
+                $data_three = $this->networkQueries->getBinaryInfo($data_one[0]->binary_right_guid);
             }
         }
         
         if (count($data_two) == 1) {
             if ($data_two[0]->binary_left != NULL) {
-                $data_four = $this->networkQueries->getBinaryInfo($data_two[0]->binary_left);
+                $data_four = $this->networkQueries->getBinaryInfo($data_two[0]->binary_left_guid);
             }
 
             if ($data_two[0]->binary_right != NULL) {
-                $data_five = $this->networkQueries->getBinaryInfo($data_two[0]->binary_right);
+                $data_five = $this->networkQueries->getBinaryInfo($data_two[0]->binary_right_guid);
             }
         }
         
         if (count($data_three) == 1) {
             if ($data_three[0]->binary_left != NULL) {
-                $data_six = $this->networkQueries->getBinaryInfo($data_three[0]->binary_left);
+                $data_six = $this->networkQueries->getBinaryInfo($data_three[0]->binary_left_guid);
             }
 
             if ($data_three[0]->binary_right != NULL) {
-                $data_seven = $this->networkQueries->getBinaryInfo($data_three[0]->binary_right);
+                $data_seven = $this->networkQueries->getBinaryInfo($data_three[0]->binary_right_guid);
             }
         }
 
@@ -187,6 +187,10 @@ class NetworkController extends Controller
         }
 
         return view('pages.mynetwork.genealogy', compact('data_one', 'data_two', 'data_three', 'data_four', 'data_five', 'data_six', 'data_seven', 'name'));
-    
+    }
+
+    public function networkList() {
+        $network = $this->networkQueries->getUnilevelList(Auth::user()->id);
+        return view('pages.mynetwork.network', compact('network'));
     }
 }

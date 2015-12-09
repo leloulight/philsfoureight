@@ -9,6 +9,8 @@ use CRUD\Http\Controllers\Controller;
 use Laracasts\Queries\DashboardQueries as dashboardQueries;
 use Laracasts\Validations\DashboardValidations as dashboardValidations;
 
+use Auth;
+
 class DashboardController extends Controller
 {
 	private $dashboardQueries;
@@ -22,35 +24,25 @@ class DashboardController extends Controller
 
     public function index()
     {
-        // $geo = $this->get_lonlat("Lakadun, MASIU, LANAO DEL SUR, PHILIPPINES");
-        // dd($geo);
-        
-        return view('pages.dashboard');
-    }
+        $id = Auth::user()->id;
+        $widget = $this->dashboardQueries->getDashboardInfo($id);
 
-    public function get_lonlat(  $addr  ) {
-        try {
-                $coordinates = @file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($addr) . '&sensor=true');
-                $e=json_decode($coordinates);
-                // call to google api failed so has ZERO_RESULTS -- i.e. rubbish address...
-                if ( isset($e->status)) { if ( $e->status == 'ZERO_RESULTS' ) {echo '1:'; $err_res=true; } else {echo '2:'; $err_res=false; } } else { echo '3:'; $err_res=false; }
-                // $coordinates is false if file_get_contents has failed so create a blank array with Longitude/Latitude.
-                if ( $coordinates == false   ||  $err_res ==  true  ) {
-                    $a = array( 'lat'=>0,'lng'=>0);
-                    $coordinates  = new stdClass();
-                    foreach (  $a  as $key => $value)
-                    {
-                        $coordinates->$key = $value;
-                    }
-                } else {
-                    // call to google ok so just return longitude/latitude.
-                    $coordinates = $e;
-                    $coordinates  =  $coordinates->results[0]->geometry->location;
-                }
+        $balance = explode('.', $widget[0]->balance); 
+        $widget[0]->balance = $this->dashboardValidations->formatMoney($widget[0]->balance);
+        $widget[0]->balance_dec = substr($balance[1], 0, 2);
 
-                return $coordinates;
-        }
-        catch (Exception $e) {
-        }
+        $referral_unilevel = explode('.', $widget[0]->referral_unilevel); 
+        $widget[0]->referral_unilevel = $this->dashboardValidations->formatMoney($widget[0]->referral_unilevel);
+        $widget[0]->referral_unilevel_dec = substr($referral_unilevel[1], 0, 2);
+
+        $commission = explode('.', $widget[0]->commission); 
+        $widget[0]->commission = $this->dashboardValidations->formatMoney($widget[0]->commission);
+        $widget[0]->commission_dec = substr($commission[1], 0, 2);
+
+        $reward = explode('.', $widget[0]->reward); 
+        $widget[0]->reward = $this->dashboardValidations->formatMoney($widget[0]->reward);
+        $widget[0]->reward_dec = substr($reward[1], 0, 2);
+
+        return view('pages.dashboard', compact('widget'));
     }
 }

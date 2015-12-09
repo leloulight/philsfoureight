@@ -13,8 +13,8 @@ class NetworkValidations{
 
 	public function formatName($name) {
 		$length = strlen($name);
-		if ($length >= 12) {
-			$name = substr($name, 0, 12) . "...";
+		if ($length >= 18) {
+			$name = substr($name, 0, 18) . "...";
 		}
 		return $name;
 	}

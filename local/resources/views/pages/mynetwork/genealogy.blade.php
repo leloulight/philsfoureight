@@ -14,8 +14,8 @@
     Genealogy
   </h1>
   <ol class="breadcrumb">
-    <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Genealogy</a></li>
-    <li class="active">View</li>
+    <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Genealogy</li>
   </ol>
 </section>
 <section class="content">
@@ -40,7 +40,7 @@
               <td colspan="8" valign="top" align="center">
                 @if (count($data_one) == 1)
                   <div id="divMain" class="genealogy small-box {{$data_one[0]->status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                    <a href="/mynetwork/genealogy/{{$data_one[0]->id}}" style="color: White;"><b>{{$data_one[0]->name}}</b></a><br />
+                    <a href="/mynetwork/genealogy/{{$data_one[0]->guid}}" style="color: White;"><b>{{$data_one[0]->name}}</b></a><br />
                     {{$data_one[0]->created_at}}<br />
                     <span class="badge {{$data_one[0]->span}}">{{$data_one[0]->type}}</span>
                   </div>
@@ -58,7 +58,7 @@
                 @if (count($data_one) == 1)
                   @if($data_one[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_one[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_one[0]->binary_left_id}}" style="color: White;"><b>{{$data_one[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_one[0]->binary_left_guid}}" style="color: White;"><b>{{$data_one[0]->binary_left_name}}</b></a><br />
                       {{$data_one[0]->binary_left_created}}<br />
                       <span class="badge {{$data_one[0]->binary_left_span}}">{{$data_one[0]->binary_left_type}}</span>
                     </div>
@@ -78,7 +78,7 @@
                 @if (count($data_one) == 1)
                   @if($data_one[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_one[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_one[0]->binary_right_id}}" style="color: White;"><b>{{$data_one[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_one[0]->binary_right_guid}}" style="color: White;"><b>{{$data_one[0]->binary_right_name}}</b></a><br />
                       {{$data_one[0]->binary_right_created}}<br />
                       <span class="badge {{$data_one[0]->binary_right_span}}">{{$data_one[0]->binary_right_type}}</span>
                     </div>
@@ -100,7 +100,7 @@
                 @if (count($data_two) == 1)
                   @if($data_two[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_two[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_two[0]->binary_left_id}}" style="color: White;"><b>{{$data_two[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_two[0]->binary_left_guid}}" style="color: White;"><b>{{$data_two[0]->binary_left_name}}</b></a><br />
                       {{$data_two[0]->binary_left_created}}<br />
                       <span class="badge {{$data_two[0]->binary_left_span}}">{{$data_two[0]->binary_left_type}}</span>
                     </div>
@@ -120,7 +120,7 @@
                 @if (count($data_two) == 1)
                   @if($data_two[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_two[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_two[0]->binary_right_id}}" style="color: White;"><b>{{$data_two[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_two[0]->binary_right_guid}}" style="color: White;"><b>{{$data_two[0]->binary_right_name}}</b></a><br />
                       {{$data_two[0]->binary_right_created}}<br />
                       <span class="badge {{$data_two[0]->binary_right_span}}">{{$data_two[0]->binary_right_type}}</span>
                     </div>
@@ -140,7 +140,7 @@
                 @if (count($data_three) == 1)
                   @if($data_three[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_three[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_three[0]->binary_left_id}}" style="color: White;"><b>{{$data_three[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_three[0]->binary_left_guid}}" style="color: White;"><b>{{$data_three[0]->binary_left_name}}</b></a><br />
                       {{$data_three[0]->binary_left_created}}<br />
                       <span class="badge {{$data_three[0]->binary_left_span}}">{{$data_three[0]->binary_left_type}}</span>
                     </div>
@@ -160,7 +160,7 @@
                 @if (count($data_three) == 1)
                   @if($data_three[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_three[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 180px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_three[0]->binary_right_id}}" style="color: White;"><b>{{$data_three[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_three[0]->binary_right_guid}}" style="color: White;"><b>{{$data_three[0]->binary_right_name}}</b></a><br />
                       {{$data_three[0]->binary_right_created}}<br />
                       <span class="badge {{$data_three[0]->binary_right_span}}">{{$data_three[0]->binary_right_type}}</span>
                     </div>
@@ -183,7 +183,7 @@
                 @if (count($data_four) == 1)
                   @if($data_four[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_four[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_four[0]->binary_left_id}}" style="color: White;"><b>{{$data_four[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_four[0]->binary_left_guid}}" style="color: White;"><b>{{$data_four[0]->binary_left_name}}</b></a><br />
                       {{$data_four[0]->binary_left_created}}<br />
                       <span class="badge {{$data_four[0]->binary_left_span}}">{{$data_four[0]->binary_left_type}}</span>
                     </div>
@@ -200,7 +200,7 @@
                 @if (count($data_four) == 1)
                   @if($data_four[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_four[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_four[0]->binary_right_id}}" style="color: White;"><b>{{$data_four[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_four[0]->binary_right_guid}}" style="color: White;"><b>{{$data_four[0]->binary_right_name}}</b></a><br />
                       {{$data_four[0]->binary_right_created}}<br />
                       <span class="badge {{$data_four[0]->binary_right_span}}">{{$data_four[0]->binary_right_type}}</span>
                     </div>
@@ -217,7 +217,7 @@
                 @if (count($data_five) == 1)
                   @if($data_five[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_five[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_five[0]->binary_left_id}}" style="color: White;"><b>{{$data_five[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_five[0]->binary_left_guid}}" style="color: White;"><b>{{$data_five[0]->binary_left_name}}</b></a><br />
                       {{$data_five[0]->binary_left_created}}<br />
                       <span class="badge {{$data_five[0]->binary_left_span}}">{{$data_five[0]->binary_left_type}}</span>
                     </div>
@@ -234,7 +234,7 @@
                 @if (count($data_five) == 1)
                   @if($data_five[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_five[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_five[0]->binary_right_id}}" style="color: White;"><b>{{$data_five[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_five[0]->binary_right_guid}}" style="color: White;"><b>{{$data_five[0]->binary_right_name}}</b></a><br />
                       {{$data_five[0]->binary_right_created}}<br />
                       <span class="badge {{$data_five[0]->binary_right_span}}">{{$data_five[0]->binary_right_type}}</span>
                     </div>
@@ -251,7 +251,7 @@
                 @if (count($data_six) == 1)
                   @if($data_six[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_six[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_six[0]->binary_left_id}}" style="color: White;"><b>{{$data_six[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_six[0]->binary_left_guid}}" style="color: White;"><b>{{$data_six[0]->binary_left_name}}</b></a><br />
                       {{$data_six[0]->binary_left_created}}<br />
                       <span class="badge {{$data_six[0]->binary_left_span}}">{{$data_six[0]->binary_left_type}}</span>
                     </div>
@@ -268,7 +268,7 @@
                 @if (count($data_six) == 1)
                   @if($data_six[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_six[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_six[0]->binary_right_id}}" style="color: White;"><b>{{$data_six[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_six[0]->binary_right_guid}}" style="color: White;"><b>{{$data_six[0]->binary_right_name}}</b></a><br />
                       {{$data_six[0]->binary_right_created}}<br />
                       <span class="badge {{$data_six[0]->binary_right_span}}">{{$data_six[0]->binary_right_type}}</span>
                     </div>
@@ -285,7 +285,7 @@
                 @if (count($data_seven) == 1)
                   @if($data_seven[0]->binary_left_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_seven[0]->binary_left_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_seven[0]->binary_left_id}}" style="color: White;"><b>{{$data_seven[0]->binary_left_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_seven[0]->binary_left_guid}}" style="color: White;"><b>{{$data_seven[0]->binary_left_name}}</b></a><br />
                       {{$data_seven[0]->binary_left_created}}<br />
                       <span class="badge {{$data_seven[0]->binary_left_span}}">{{$data_seven[0]->binary_left_type}}</span>
                     </div>
@@ -302,7 +302,7 @@
                 @if (count($data_seven) == 1)
                   @if($data_seven[0]->binary_right_name != NULL)
                     <div id="divMain" class="genealogy small-box {{$data_seven[0]->binary_right_status == 1 ? 'bg-green' : 'bg-red'}}" style="width: 120px; height: 70px;">
-                      <a href="/mynetwork/genealogy/{{$data_seven[0]->binary_right_id}}" style="color: White;"><b>{{$data_seven[0]->binary_right_name}}</b></a><br />
+                      <a href="/mynetwork/genealogy/{{$data_seven[0]->binary_right_guid}}" style="color: White;"><b>{{$data_seven[0]->binary_right_name}}</b></a><br />
                       {{$data_seven[0]->binary_right_created}}<br />
                       <span class="badge {{$data_seven[0]->binary_right_span}}">{{$data_seven[0]->binary_right_type}}</span>
                     </div>

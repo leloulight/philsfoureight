@@ -39,3 +39,6 @@ Route::post('remittance/submit','RemittanceController@store');
 Route::get('history/commission', 'HistoryController@commission');
 // MY NETWORK
 Route::get('mynetwork/genealogy/{id}', 'NetworkController@genealogy');
+Route::get('mynetwork/list', 'NetworkController@networkList');
+// API
+Route::get('api/bargraph', 'ApiController@getDashboardBarGraph');

@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/skins/skin-green.min.css')}}">
+    <link rel="shortcut icon" type="image/png" href="{{asset('src/images/favicon.ico')}}"/>
   </head>
   <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
@@ -118,8 +119,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
-                <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Network List</a></li>
-                <li class="{{Request::path() == 'mynetwork/genealogy' ? 'active' : ''}}"><a href="/mynetwork/genealogy/{{Auth::user()->id}}"><i class="fa fa-circle-o"></i> Genealogy</a></li>
+                <li class="{{Request::path() == 'mynetwork/list' ? 'active' : ''}}"><a href="/mynetwork/list"><i class="fa fa-circle-o"></i> Network List</a></li>
+                <li class="{{Request::path() == 'mynetwork/genealogy' ? 'active' : ''}}"><a href="/mynetwork/genealogy/{{Auth::user()->guid}}"><i class="fa fa-circle-o"></i> Genealogy</a></li>
               </ul>
             </li>          
 
