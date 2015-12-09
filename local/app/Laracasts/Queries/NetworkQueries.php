@@ -49,142 +49,167 @@ class NetworkQueries{
 		$networkList[0] = array("level" => 1, "total" => $total, "active" => $active);
 
 		// LEVEL 2
-		$sql = "SELECT id, status FROM members ";
-
-		for ($i=0; $i < count($unilevel_id); $i++) { 
-			if ($i == 0) $sql .= " WHERE ";
-			$sql .= "unilevel_id = " . $unilevel_id[$i];
-			if ($i < count($unilevel_id) - 1) $sql .= " OR ";
-		}
-		$result = DB::select($sql);
-
-		$total = count($result);
 		$active = 0;
 		$unilevel_id = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT id, status FROM members ";
 
-		foreach ($result as $row) {
-			if($row->status == "1") {
-				$active += 1;
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE ";
+				$sql .= "unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
-			array_push($unilevel_id, $row->id);
-		}
+			$result = DB::select($sql);
 
-		$networkList[1] = array("level" => 2, "total" => $total, "active" => $active);
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id, $row->id);
+			}
+
+			$networkList[1] = array("level" => 2, "total" => $total, "active" => $active);
+		} else {
+			$networkList[1] = array("level" => 2, "total" => 0, "active" => 0);
+		}
 		
 		// LEVEL 3
-		$sql = "SELECT id, status FROM members ";
-
-		for ($i=0; $i < count($unilevel_id); $i++) { 
-			$sql .= "unilevel_id = " . $unilevel_id[$i];
-			if ($i < count($unilevel_id) - 1) $sql .= " OR ";
-		}
-		$result = DB::select($sql);
-
-		$total = count($result);
 		$active = 0;
 		$unilevel_id = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT id, status FROM members ";
 
-		foreach ($result as $row) {
-			if($row->status == "1") {
-				$active += 1;
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				$sql .= "unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
-			array_push($unilevel_id, $row->id);
+			$result = DB::select($sql);
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id, $row->id);
+			}
+
+			$networkList[2] = array("level" => 3, "total" => $total, "active" => $active);
+		} else {
+			$networkList[2] = array("level" => 3, "total" => 0, "active" => 0);
 		}
 
-		$networkList[2] = array("level" => 3, "total" => $total, "active" => $active);
-		
 		// LEVEL 4
-		$sql = "SELECT id, status FROM members ";
-
-		for ($i=0; $i < count($unilevel_id); $i++) { 
-			if ($i == 0) $sql .= " WHERE ";
-			$sql .= "unilevel_id = " . $unilevel_id[$i];
-			if ($i < count($unilevel_id) - 1) $sql .= " OR ";
-		}
-		$result = DB::select($sql);
-
-		$total = count($result);
 		$active = 0;
 		$unilevel_id = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT id, status FROM members ";
 
-		foreach ($result as $row) {
-			if($row->status == "1") {
-				$active += 1;
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE ";
+				$sql .= "unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
-			array_push($unilevel_id, $row->id);
+			$result = DB::select($sql);
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id, $row->id);
+			}
+
+			$networkList[3] = array("level" => 4, "total" => $total, "active" => $active);
+		} else {
+			$networkList[3] = array("level" => 4, "total" => 0, "active" => 0);
 		}
 
-		$networkList[3] = array("level" => 4, "total" => $total, "active" => $active);
-		
 		// LEVEL 5
-		$sql = "SELECT id, status FROM members ";
-
-		for ($i=0; $i < count($unilevel_id); $i++) { 
-			if ($i == 0) $sql .= " WHERE ";
-			$sql .= "unilevel_id = " . $unilevel_id[$i];
-			if ($i < count($unilevel_id) - 1) $sql .= " OR ";
-		}
-		$result = DB::select($sql);
-
-		$total = count($result);
 		$active = 0;
 		$unilevel_id = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT id, status FROM members ";
 
-		foreach ($result as $row) {
-			if($row->status == "1") {
-				$active += 1;
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE ";
+				$sql .= "unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
-			array_push($unilevel_id, $row->id);
+			$result = DB::select($sql);
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id, $row->id);
+			}
+
+			$networkList[4] = array("level" => 5, "total" => $total, "active" => $active);
+		} else {
+			$networkList[4] = array("level" => 5, "total" => 0, "active" => 0);
 		}
 
-		$networkList[4] = array("level" => 5, "total" => $total, "active" => $active);
-		
 		// LEVEL 6
-		$sql = "SELECT id, status FROM members ";
-
-		for ($i=0; $i < count($unilevel_id); $i++) { 
-			if ($i == 0) $sql .= " WHERE ";
-			$sql .= "unilevel_id = " . $unilevel_id[$i];
-			if ($i < count($unilevel_id) - 1) $sql .= " OR ";
-		}
-		$result = DB::select($sql);
-
-		$total = count($result);
 		$active = 0;
 		$unilevel_id = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT id, status FROM members ";
 
-		foreach ($result as $row) {
-			if($row->status == "1") {
-				$active += 1;
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE ";
+				$sql .= "unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
-			array_push($unilevel_id, $row->id);
+			$result = DB::select($sql);
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id, $row->id);
+			}
+
+			$networkList[5] = array("level" => 6, "total" => $total, "active" => $active);
+		} else {
+			$networkList[5] = array("level" => 6, "total" => 0, "active" => 0);
 		}
 
-		$networkList[5] = array("level" => 6, "total" => $total, "active" => $active);
-		
 		// LEVEL 7
-		$sql = "SELECT id, status FROM members ";
-
-		for ($i=0; $i < count($unilevel_id); $i++) { 
-			if ($i == 0) $sql .= " WHERE ";
-			$sql .= "unilevel_id = " . $unilevel_id[$i];
-			if ($i < count($unilevel_id) - 1) $sql .= " OR ";
-		}
-		$result = DB::select($sql);
-
-		$total = count($result);
 		$active = 0;
 		$unilevel_id = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT id, status FROM members ";
 
-		foreach ($result as $row) {
-			if($row->status == "1") {
-				$active += 1;
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE ";
+				$sql .= "unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
-			array_push($unilevel_id, $row->id);
+			$result = DB::select($sql);
+
+			$total = count($result);
+			
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id, $row->id);
+			}
+
+			$networkList[6] = array("level" => 7, "total" => $total, "active" => $active);
+		} else {
+			$networkList[6] = array("level" => 7, "total" => 0, "active" => 0);
 		}
 
-		$networkList[6] = array("level" => 7, "total" => $total, "active" => $active);
-		
 		return $networkList;
 	}
 
