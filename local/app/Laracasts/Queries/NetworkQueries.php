@@ -29,7 +29,7 @@ class NetworkQueries{
 		$networkList[] = NULL;
 		
 		// LEVEL 1
-		$sql = "SELECT id, status FROM members WHERE unilevel_id = :id";
+		$sql = "SELECT id, status FROM members WHERE (type = 'member' OR type = 'stockist') AND unilevel_id = :id";
 		$param = array(
 			":id" => $id,
 		);
@@ -50,12 +50,13 @@ class NetworkQueries{
 
 		// LEVEL 2
 		$active = 0;
-		$unilevel_id = array();
+		// $unilevel_id = array();
+		$unilevel_id_temp = array();
 		if (count($unilevel_id) > 0) {
 			$sql = "SELECT id, status FROM members ";
 
 			for ($i=0; $i < count($unilevel_id); $i++) { 
-				if ($i == 0) $sql .= " WHERE ";
+				if ($i == 0) $sql .= " WHERE (type = 'member' OR type = 'stockist') AND ";
 				$sql .= "unilevel_id = " . $unilevel_id[$i];
 				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
@@ -67,7 +68,7 @@ class NetworkQueries{
 				if($row->status == "1") {
 					$active += 1;
 				}
-				array_push($unilevel_id, $row->id);
+				array_push($unilevel_id_temp, $row->id);
 			}
 
 			$networkList[1] = array("level" => 2, "total" => $total, "active" => $active);
@@ -78,10 +79,13 @@ class NetworkQueries{
 		// LEVEL 3
 		$active = 0;
 		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
 		if (count($unilevel_id) > 0) {
 			$sql = "SELECT id, status FROM members ";
 
 			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (type = 'member' OR type = 'stockist') AND ";
 				$sql .= "unilevel_id = " . $unilevel_id[$i];
 				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
@@ -93,7 +97,7 @@ class NetworkQueries{
 				if($row->status == "1") {
 					$active += 1;
 				}
-				array_push($unilevel_id, $row->id);
+				array_push($unilevel_id_temp, $row->id);
 			}
 
 			$networkList[2] = array("level" => 3, "total" => $total, "active" => $active);
@@ -104,11 +108,13 @@ class NetworkQueries{
 		// LEVEL 4
 		$active = 0;
 		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
 		if (count($unilevel_id) > 0) {
 			$sql = "SELECT id, status FROM members ";
 
 			for ($i=0; $i < count($unilevel_id); $i++) { 
-				if ($i == 0) $sql .= " WHERE ";
+				if ($i == 0) $sql .= " WHERE (type = 'member' OR type = 'stockist') AND ";
 				$sql .= "unilevel_id = " . $unilevel_id[$i];
 				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
@@ -120,7 +126,7 @@ class NetworkQueries{
 				if($row->status == "1") {
 					$active += 1;
 				}
-				array_push($unilevel_id, $row->id);
+				array_push($unilevel_id_temp, $row->id);
 			}
 
 			$networkList[3] = array("level" => 4, "total" => $total, "active" => $active);
@@ -131,11 +137,13 @@ class NetworkQueries{
 		// LEVEL 5
 		$active = 0;
 		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
 		if (count($unilevel_id) > 0) {
 			$sql = "SELECT id, status FROM members ";
 
 			for ($i=0; $i < count($unilevel_id); $i++) { 
-				if ($i == 0) $sql .= " WHERE ";
+				if ($i == 0) $sql .= " WHERE (type = 'member' OR type = 'stockist') AND ";
 				$sql .= "unilevel_id = " . $unilevel_id[$i];
 				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
@@ -147,7 +155,7 @@ class NetworkQueries{
 				if($row->status == "1") {
 					$active += 1;
 				}
-				array_push($unilevel_id, $row->id);
+				array_push($unilevel_id_temp, $row->id);
 			}
 
 			$networkList[4] = array("level" => 5, "total" => $total, "active" => $active);
@@ -158,11 +166,13 @@ class NetworkQueries{
 		// LEVEL 6
 		$active = 0;
 		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
 		if (count($unilevel_id) > 0) {
 			$sql = "SELECT id, status FROM members ";
 
 			for ($i=0; $i < count($unilevel_id); $i++) { 
-				if ($i == 0) $sql .= " WHERE ";
+				if ($i == 0) $sql .= " WHERE (type = 'member' OR type = 'stockist') AND ";
 				$sql .= "unilevel_id = " . $unilevel_id[$i];
 				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
@@ -174,7 +184,7 @@ class NetworkQueries{
 				if($row->status == "1") {
 					$active += 1;
 				}
-				array_push($unilevel_id, $row->id);
+				array_push($unilevel_id_temp, $row->id);
 			}
 
 			$networkList[5] = array("level" => 6, "total" => $total, "active" => $active);
@@ -185,11 +195,13 @@ class NetworkQueries{
 		// LEVEL 7
 		$active = 0;
 		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
 		if (count($unilevel_id) > 0) {
 			$sql = "SELECT id, status FROM members ";
 
 			for ($i=0; $i < count($unilevel_id); $i++) { 
-				if ($i == 0) $sql .= " WHERE ";
+				if ($i == 0) $sql .= " WHERE (type = 'member' OR type = 'stockist') AND ";
 				$sql .= "unilevel_id = " . $unilevel_id[$i];
 				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
 			}
@@ -202,7 +214,7 @@ class NetworkQueries{
 				if($row->status == "1") {
 					$active += 1;
 				}
-				array_push($unilevel_id, $row->id);
+				array_push($unilevel_id_temp, $row->id);
 			}
 
 			$networkList[6] = array("level" => 7, "total" => $total, "active" => $active);

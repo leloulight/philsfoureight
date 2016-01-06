@@ -124,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>          
 
-            <li class="treeview {{strpos(Request::path(),'bills') !== false ? 'active' : ''}}">
+            <!-- <li class="treeview {{strpos(Request::path(),'bills') !== false ? 'active' : ''}}">
               <a href="::javascript()">
               <i class="fa fa-money"></i> <span>Bills Payment</span>
               <i class="fa fa-angle-left pull-right"></i>
@@ -229,19 +229,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
               </ul>
             </li>
-
-            <li class="{{Request::path() == 'remittance' ? 'active' : ''}}"><a href="/remittance"><i class="fa fa-send"></i> <span>Remittance Service</span></a></li>
+ -->
+            <!-- <li class="{{Request::path() == 'remittance' ? 'active' : ''}}"><a href="/remittance"><i class="fa fa-send"></i> <span>Remittance Service</span></a></li> -->
 
             <li class="treeview {{strpos(Request::path(),'register') !== false ? 'active' : ''}}">
               <a href="::javascript()">
-              <i class="fa fa-history"></i> <span>History</span>
+              <i class="fa fa-history"></i> <span>Transaction History</span>
               <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu " style="">
                 <li class="{{Request::path() == 'register' ? 'active' : ''}}"><a href="/history/commission"><i class="fa fa-circle-o"></i> Commission</a></li>
-                <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Encashment</a></li>
+                <!-- <li class="{{Request::path() == 'register/sub' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Encashment</a></li>
                 <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Bills Payment</a></li>
-                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Remittance</a></li>
+                <li class="{{Request::path() == 'register/stockist' ? 'active' : ''}}"><a href=""><i class="fa fa-circle-o"></i> Remittance</a></li> -->
               </ul>
             </li>
 
