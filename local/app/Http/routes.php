@@ -40,5 +40,6 @@ Route::get('history/commission', 'HistoryController@commission');
 // MY NETWORK
 Route::get('mynetwork/genealogy/{id}', 'NetworkController@genealogy');
 Route::get('mynetwork/list', 'NetworkController@networkList');
+Route::get('mynetwork/level/{level}', 'NetworkController@unilevelList');
 // API
 Route::get('api/bargraph', 'ApiController@getDashboardBarGraph');

@@ -193,4 +193,22 @@ class NetworkController extends Controller
         $network = $this->networkQueries->getUnilevelList(Auth::user()->id);
         return view('pages.mynetwork.network', compact('network'));
     }
+
+    public function unilevelList($level) {
+        if ((int)$level == 0){ return view('pages.404'); }
+        if ((int)$level > 7){ return view('pages.404'); }
+
+        $members = $this->networkQueries->getUnilevelListPerLevel(Auth::user()->id, $level);
+        $row_num = Input::get('page', 1);
+        $row_num = ($row_num - 1) * 15;
+
+        foreach($members as &$row) {
+            $row->row_num = $row_num += 1;
+            $row->created_at = $this->networkValidations->formatDate($row->created_at);
+            $row->badgeStatus = $this->networkValidations->getStatusClass($row->status);
+            $row->badgeStatusLabel = $this->networkValidations->validateStatus($row->status);
+        }
+
+        return view('pages.mynetwork.unilevel', compact('members'));
+    }
 }

@@ -225,4 +225,254 @@ class NetworkQueries{
 		return $networkList;
 	}
 
+	public function getUnilevelListPerLevel($id, $level) {
+		$networkList[] = NULL;
+		
+		// LEVEL 1
+		$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+				CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+				INNER JOIN members B
+				ON B.id = A.unilevel_id
+				WHERE A.unilevel_id = :id";
+		$param = array(
+			":id" => $id,
+		);
+		$result = DB::select($sql, $param);
+
+		if ($level == 1) {
+			return $result;
+		}
+
+		$total = count($result);
+		$active = 0;
+		$unilevel_id = array();
+
+		foreach ($result as $row) {
+			if($row->status == "1") {
+				$active += 1;
+			}
+			array_push($unilevel_id, $row->id);
+		}
+
+		$networkList[0] = array("level" => 1, "total" => $total, "active" => $active);
+
+		// LEVEL 2
+		$active = 0;
+		// $unilevel_id = array();
+		$unilevel_id_temp = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+					CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+					INNER JOIN members B
+					ON B.id = A.unilevel_id ";
+
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (A.type = 'member' OR A.type = 'stockist') AND ";
+				$sql .= "A.unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
+			}
+			$result = DB::select($sql);
+
+			if ($level == 2) {
+				return $result;
+			}
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id_temp, $row->id);
+			}
+
+			$networkList[1] = array("level" => 2, "total" => $total, "active" => $active);
+		} else {
+			$networkList[1] = array("level" => 2, "total" => 0, "active" => 0);
+		}
+		
+		// LEVEL 3
+		$active = 0;
+		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+					CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+					INNER JOIN members B
+					ON B.id = A.unilevel_id ";
+
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (A.type = 'member' OR A.type = 'stockist') AND ";
+				$sql .= "A.unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
+			}
+			$result = DB::select($sql);
+			
+			if ($level == 3) {
+				return $result;
+			}
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id_temp, $row->id);
+			}
+
+			$networkList[2] = array("level" => 3, "total" => $total, "active" => $active);
+		} else {
+			$networkList[2] = array("level" => 3, "total" => 0, "active" => 0);
+		}
+
+		// LEVEL 4
+		$active = 0;
+		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+					CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+					INNER JOIN members B
+					ON B.id = A.unilevel_id ";
+
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (A.type = 'member' OR A.type = 'stockist') AND ";
+				$sql .= "A.unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
+			}
+			$result = DB::select($sql);
+
+			if ($level == 4) {
+				return $result;
+			}
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id_temp, $row->id);
+			}
+
+			$networkList[3] = array("level" => 4, "total" => $total, "active" => $active);
+		} else {
+			$networkList[3] = array("level" => 4, "total" => 0, "active" => 0);
+		}
+
+		// LEVEL 5
+		$active = 0;
+		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+					CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+					INNER JOIN members B
+					ON B.id = A.unilevel_id ";
+
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (A.type = 'member' OR A.type = 'stockist') AND ";
+				$sql .= "A.unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
+			}
+			$result = DB::select($sql);
+
+			if ($level == 5) {
+				return $result;
+			}
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id_temp, $row->id);
+			}
+
+			$networkList[4] = array("level" => 5, "total" => $total, "active" => $active);
+		} else {
+			$networkList[4] = array("level" => 5, "total" => 0, "active" => 0);
+		}
+
+		// LEVEL 6
+		$active = 0;
+		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+					CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+					INNER JOIN members B
+					ON B.id = A.unilevel_id ";
+
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (A.type = 'member' OR A.type = 'stockist') AND ";
+				$sql .= "A.unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
+			}
+			$result = DB::select($sql);
+
+			if ($level == 6) {
+				return $result;
+			}
+
+			$total = count($result);
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id_temp, $row->id);
+			}
+
+			$networkList[5] = array("level" => 6, "total" => $total, "active" => $active);
+		} else {
+			$networkList[5] = array("level" => 6, "total" => 0, "active" => 0);
+		}
+
+		// LEVEL 7
+		$active = 0;
+		$unilevel_id = array();
+		$unilevel_id = $unilevel_id_temp;
+		$unilevel_id_temp = array();
+		if (count($unilevel_id) > 0) {
+			$sql = "SELECT A.id, A.username, A.firstname, A.middlename, A.lastname, A.status, A.created_at, A.unilevel_id, 
+					CONCAT(B.lastname, ', ', B.firstname, ' ', B.middlename) AS 'sponsor'  FROM members A 
+					INNER JOIN members B
+					ON B.id = A.unilevel_id ";
+
+			for ($i=0; $i < count($unilevel_id); $i++) { 
+				if ($i == 0) $sql .= " WHERE (A.type = 'member' OR A.type = 'stockist') AND ";
+				$sql .= "A.unilevel_id = " . $unilevel_id[$i];
+				if ($i < count($unilevel_id) - 1) $sql .= " OR ";
+			}
+			$result = DB::select($sql);
+
+			if ($level == 7) {
+				return $result;
+			}
+
+			$total = count($result);
+			
+
+			foreach ($result as $row) {
+				if($row->status == "1") {
+					$active += 1;
+				}
+				array_push($unilevel_id_temp, $row->id);
+			}
+
+			$networkList[6] = array("level" => 7, "total" => $total, "active" => $active);
+		} else {
+			$networkList[6] = array("level" => 7, "total" => 0, "active" => 0);
+		}
+
+		return $unilevel_id_temp;
+	}
+
 }

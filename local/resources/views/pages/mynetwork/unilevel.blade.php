@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-	Unilevel Summary
+	Genealogy
 @stop
 
 @section('styles')
@@ -9,21 +9,25 @@
 
 
 @section('content')
+<!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Network List
+    Members
+    <small>List of Members</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Network List</li>
+    <li><i class="fa fa-dashboard"></i> Network</li>
+    <li class="active">List</li>
   </ol>
 </section>
+<!-- Main content -->
 <section class="content">
+  <!-- Your Page Content Here -->
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Unilevel Summary</h3>
+          <h3 class="box-title">Unilevel List</h3>
           <div class="box-tools">
             <!-- <div class="input-group" style="width: 150px;">
               <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -36,23 +40,26 @@
         <div class="box-body table-responsive no-padding">
           <table class="table table-striped">
             <tr>
-              <th>Level</th>
-              <th>Total</th>
-              <th>Active</th>
-              <th></th>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Status</th>
+              <th>Sponsor</th>
+              <th>Date Registered</th>
             </tr>
-            @foreach($network as $row)
+            @foreach($members as $row)
               <tr>
-                <td>Level {{$row['level']}}</td>
-                <td>{{$row['total']}}</td>
-                <td>{{$row['active']}}</td>
-                <td><a href="/mynetwork/level/{{$row['level']}}" class="btn btn-info btn-xs">View</a></td>
+                <td>{{$row->row_num}}</td>
+                <td>{{$row->lastname}}, {{$row->firstname}} {{$row->middlename}}</td>
+                <td>{{$row->username}}</td>
+                <td><span class="badge {{$row->badgeStatus}}">{{$row->badgeStatusLabel}}</span></td>
+                <td>{{$row->sponsor}}</td>
+                <td>{{$row->created_at}}</td>
               </tr>
             @endforeach
           </table>
         </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-        </div>
+        
       </div><!-- /.box -->
     </div>
   </div>
@@ -60,4 +67,5 @@
 @stop
 
 @section('scripts')
+
 @stop

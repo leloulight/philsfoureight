@@ -30,4 +30,19 @@ class NetworkValidations{
 			case 'Sub': return 'bg-yellow'; break;
 		}
 	}
+
+	public function getStatusClass($status) {
+		switch($status){
+			case 1: return "bg-green";break;
+			case 0: return "bg-red";break;
+		}
+	}
+
+	public function validateStatus($status) {
+		switch($status){
+			case 1: return "Active";break;
+			case 0: return "Inactive";break;
+		}
+	}
+	
 }
